@@ -1,0 +1,248 @@
+Temp: 22.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 22.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 22.00 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 0 | SW: los | SSR: AUS
+Encoder: 1 (DT raw=1024)
+Encoder: 2 (DT raw=1024)
+Encoder: 3 (DT raw=1024)
+Encoder: 4 (DT raw=1024)
+Encoder: 5 (DT raw=1024)
+Temp: 22.50 C | Enc: 5 | SW: los | SSR: AUS
+Encoder: 6 (DT raw=1024)
+Encoder: 7 (DT raw=1024)
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Encoder: 6 (DT raw=3)
+Encoder: 7 (DT raw=1024)
+Encoder: 6 (DT raw=2)
+Encoder: 5 (DT raw=4)
+Encoder: 4 (DT raw=1)
+Temp: 23.00 C | Enc: 4 | SW: los | SSR: AUS
+Encoder: 3 (DT raw=3)
+Encoder: 4 (DT raw=1024)
+Encoder: 3 (DT raw=1)
+Encoder: 2 (DT raw=4)
+Encoder: 1 (DT raw=2)
+Encoder: 0 (DT raw=4)
+Encoder: -1 (DT raw=2)
+Temp: 22.00 C | Enc: -1 | SW: los | SSR: AUS
+Encoder: 0 (DT raw=1024)
+Encoder: 1 (DT raw=1024)
+Encoder: 2 (DT raw=1024)
+Temp: 22.25 C | Enc: 2 | SW: los | SSR: AUS
+Encoder: 3 (DT raw=1024)
+Encoder: 4 (DT raw=1024)
+Encoder: 5 (DT raw=1024)
+Encoder: 6 (DT raw=1024)
+Encoder: 7 (DT raw=1024)
+Encoder: 8 (DT raw=1024)
+Temp: 22.50 C | Enc: 8 | SW: los | SSR: AUS
+Encoder: 9 (DT raw=1024)
+Encoder: 10 (DT raw=1024)
+Encoder: 11 (DT raw=1024)
+Encoder: 12 (DT raw=1024)
+Encoder: 13 (DT raw=1024)
+Encoder: 14 (DT raw=1024)
+Temp: 22.75 C | Enc: 14 | SW: los | SSR: AUS
+Encoder: 15 (DT raw=1024)
+Temp: 22.75 C | Enc: 15 | SW: los | SSR: AUS
+Encoder: 16 (DT raw=1024)
+Temp: 22.50 C | Enc: 16 | SW: los | SSR: AUS
+Encoder: 17 (DT raw=1024)
+Temp: 22.75 C | Enc: 17 | SW: los | SSR: AUS
+Encoder: 16 (DT raw=3)
+Encoder: 15 (DT raw=2)
+Encoder: 14 (DT raw=1)
+Temp: 23.00 C | Enc: 14 | SW: los | SSR: AUS
+Encoder: 13 (DT raw=3)
+Encoder: 12 (DT raw=1)
+Encoder: 11 (DT raw=2)
+Encoder: 10 (DT raw=2)
+Temp: 22.00 C | Enc: 10 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 10 | SW: los | SSR: AUS
+Encoder: 9 (DT raw=3)
+Encoder: 8 (DT raw=4)
+Encoder: 7 (DT raw=2)
+Encoder: 6 (DT raw=4)
+Encoder: 5 (DT raw=2)
+Encoder: 4 (DT raw=4)
+Encoder: 3 (DT raw=2)
+Encoder: 2 (DT raw=4)
+Temp: 23.00 C | Enc: 2 | SW: los | SSR: AUS
+Encoder: 1 (DT raw=3)
+Encoder: 0 (DT raw=4)
+Encoder: -1 (DT raw=2)
+Temp: 22.25 C | Enc: -1 | SW: los | SSR: AUS
+Temp: 22.25 C | Enc: -1 | SW: los | SSR: AUS
+Encoder: 0 (DT raw=1024)
+Encoder: -1 (DT raw=1)
+Encoder: 0 (DT raw=1024)
+Encoder: 1 (DT raw=1024)
+Encoder: 2 (DT raw=1024)
+Encoder: 3 (DT raw=1024)
+Temp: 22.25 C | Enc: 3 | SW: los | SSR: AUS
+Encoder: 4 (DT raw=1024)
+Encoder: 5 (DT raw=1024)
+Encoder: 6 (DT raw=1024)
+Encoder: 7 (DT raw=1024)
+Encoder: 8 (DT raw=1024)
+Encoder: 9 (DT raw=1024)
+Encoder: 10 (DT raw=1024)
+Encoder: 11 (DT raw=1024)
+Encoder: 12 (DT raw=1024)
+Encoder: 13 (DT raw=1024)
+Temp: 22.50 C | Enc: 13 | SW: los | SSR: AUS
+Encoder: 14 (DT raw=1024)
+Encoder: 15 (DT raw=1024)
+Encoder: 16 (DT raw=1024)
+Encoder: 17 (DT raw=1024)
+Encoder: 18 (DT raw=1024)
+Encoder: 19 (DT raw=1024)
+Encoder: 20 (DT raw=1024)
+Encoder: 19 (DT raw=2)
+Encoder: 20 (DT raw=1024)
+Encoder: 21 (DT raw=1024)
+Temp: 22.00 C | Enc: 21 | SW: los | SSR: AUS
+Encoder: 22 (DT raw=1024)
+Encoder: 23 (DT raw=1024)
+Encoder: 24 (DT raw=1024)
+Encoder: 25 (DT raw=1024)
+Encoder: 26 (DT raw=1024)
+Encoder: 27 (DT raw=1024)
+Encoder: 28 (DT raw=1024)
+Encoder: 29 (DT raw=1024)
+Encoder: 28 (DT raw=2)
+Encoder: 27 (DT raw=1)
+Encoder: 28 (DT raw=1024)
+Temp: 22.25 C | Enc: 28 | SW: los | SSR: AUS
+Encoder: 27 (DT raw=3)
+Encoder: 26 (DT raw=4)
+Encoder: 25 (DT raw=2)
+Encoder: 24 (DT raw=3)
+Encoder: 23 (DT raw=1)
+Encoder: 22 (DT raw=2)
+Encoder: 21 (DT raw=4)
+Encoder: 20 (DT raw=2)
+Encoder: 19 (DT raw=4)
+Temp: 22.75 C | Enc: 19 | SW: los | SSR: AUS
+Encoder: 18 (DT raw=3)
+Encoder: 17 (DT raw=4)
+Encoder: 16 (DT raw=1)
+Temp: 22.50 C | Enc: 16 | SW: los | SSR: AUS
+Encoder: 15 (DT raw=3)
+Encoder: 14 (DT raw=3)
+Encoder: 13 (DT raw=2)
+Encoder: 12 (DT raw=2)
+Encoder: 11 (DT raw=4)
+Encoder: 10 (DT raw=1)
+Encoder: 9 (DT raw=4)
+Encoder: 8 (DT raw=1)
+Encoder: 7 (DT raw=4)
+Temp: 23.25 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.00 C | Enc: 7 | SW: los | SSR: AUS
+SSR: AN
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AN
+Temp: 22.25 C | Enc: 7 | SW: los | SSR: AN
+Temp: 23.25 C | Enc: 7 | SW: los | SSR: AN
+SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+SSR: AN
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AN
+SSR: AUS
+Temp: 22.25 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.25 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 21.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.25 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.25 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.25 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.25 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.25 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.25 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.25 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 7 | SW: los | SSR: AUS

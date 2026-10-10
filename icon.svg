@@ -1,0 +1,31 @@
+<svg xmlns="http://w3.org" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Hintergrund-Kreis (One Dark Theme) -->
+  <circle cx="50" cy="50" r="46" fill="#282c34" stroke="#61afef" stroke-width="3" />
+
+  <!-- Die zentrierte Bügelsohle (Flatiron) -->
+  <!-- Außenkontur (Verschoben nach oben, um perfekt mittig zu sitzen) -->
+  <path d="M50 20 C58 35 68 54 68 70 C68 76 63 80 50 80 C37 80 32 76 32 70 C32 54 42 35 50 20 Z"
+    fill="#3e4452" stroke="#abb2bf" stroke-width="3" stroke-linejoin="round" />
+
+  <!-- Innenfläche (Abgesetzte Heizplatte) -->
+  <path d="M50 27 C56 39 64 56 64 68 C64 72 60 74 50 74 C40 74 36 72 36 68 C36 56 44 39 50 27 Z"
+    fill="#21252b" />
+
+  <!-- "Dampflöcher" / Heizsegmente (One Dark Blau) -->
+  <g fill="#61afef">
+    <!-- Spitze -->
+    <circle cx="50" cy="36" r="2" />
+    <!-- Reihe 1 -->
+    <circle cx="45" cy="45" r="2" />
+    <circle cx="55" cy="45" r="2" />
+    <!-- Reihe 2 -->
+    <circle cx="42" cy="54" r="2" />
+    <circle cx="50" cy="54" r="2" />
+    <circle cx="57" cy="54" r="2" />
+    <!-- Reihe 3 -->
+    <circle cx="40" cy="63" r="2" />
+    <circle cx="46" cy="63" r="2" />
+    <circle cx="54" cy="63" r="2" />
+    <circle cx="60" cy="63" r="2" />
+  </g>
+</svg>

@@ -1,0 +1,169 @@
+Serielle Verbindung bereit
+
+=== HARDWARETEST ===
+I2C: Geraet bei 0x3C
+OLED: OK
+OLED: Initialisierung erfolgreich
+Temp: 23.50 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.50 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.25 C | Enc: 0 | SW: los | SSR: AUS
+Encoder: -1 (DT raw=3)
+SSR: AN
+Encoder: -2 (DT raw=5)
+Encoder: -3 (DT raw=1)
+SSR: AUS
+Temp: 24.25 C | Enc: -3 | SW: los | SSR: AUS
+Encoder: -4 (DT raw=5)
+Encoder: -5 (DT raw=7)
+Encoder: -6 (DT raw=4)
+Temp: 24.25 C | Enc: -6 | SW: los | SSR: AUS
+Encoder: -7 (DT raw=4)
+Encoder: -8 (DT raw=7)
+Encoder: -9 (DT raw=4)
+SSR: AN
+Encoder: -10 (DT raw=6)
+Encoder: -11 (DT raw=2)
+Encoder: -12 (DT raw=3)
+Encoder: -13 (DT raw=4)
+Encoder: -14 (DT raw=5)
+Encoder: -15 (DT raw=3)
+SSR: AUS
+Temp: 24.50 C | Enc: -15 | SW: los | SSR: AUS
+Encoder: -16 (DT raw=5)
+Encoder: -17 (DT raw=7)
+Encoder: -18 (DT raw=4)
+Encoder: -19 (DT raw=5)
+Encoder: -20 (DT raw=6)
+Encoder: -21 (DT raw=9)
+Encoder: -22 (DT raw=2)
+Temp: 23.75 C | Enc: -22 | SW: los | SSR: AUS
+Encoder: -23 (DT raw=6)
+Encoder: -24 (DT raw=7)
+Encoder: -25 (DT raw=4)
+SSR: AN
+Encoder: -26 (DT raw=4)
+Temp: 24.25 C | Enc: -26 | SW: los | SSR: AN
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AN
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AN
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AN
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AN
+SSR: AUS (Timeout/Temperatur)
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.50 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.50 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.50 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.50 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.50 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.50 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.50 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.50 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.50 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.50 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.50 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 22.50 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 23.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 22.75 C | Enc: -26 | SW: los | SSR: AUS

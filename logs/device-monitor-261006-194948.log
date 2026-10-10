@@ -1,0 +1,612 @@
+Serielle Verbindung bereit
+
+=== HARDWARETEST ===
+I2C: Geraet bei 0x3C
+OLED: OK
+OLED: Initialisierung erfolgreich
+Temp: 23.50 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.00 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.75 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.75 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.50 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.75 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.75 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.50 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.25 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.00 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.00 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.75 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.50 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.00 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.50 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.00 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.75 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 23.75 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.00 C | Enc: 0 | SW: los | SSR: AUS
+Temp: 24.50 C | Enc: 0 | SW: los | SSR: AUS
+Encoder: -1 (DT raw=3)
+Encoder: -2 (DT raw=5)
+Temp: 24.50 C | Enc: -2 | SW: los | SSR: AUS
+Encoder: -3 (DT raw=2)
+SSR: AN
+Encoder: -4 (DT raw=6)
+Temp: 24.75 C | Enc: -4 | SW: los | SSR: AN
+Temp: 24.75 C | Enc: -4 | SW: los | SSR: AN
+SSR: AUS
+Encoder: -5 (DT raw=5)
+Temp: 24.50 C | Enc: -5 | SW: los | SSR: AUS
+SSR: AN
+Encoder: -6 (DT raw=3)
+Encoder: -7 (DT raw=6)
+Temp: 24.50 C | Enc: -7 | SW: los | SSR: AN
+Temp: 24.50 C | Enc: -7 | SW: los | SSR: AN
+Temp: 24.25 C | Enc: -7 | SW: los | SSR: AN
+Encoder: -8 (DT raw=5)
+Encoder: -9 (DT raw=2)
+SSR: AUS
+Encoder: -10 (DT raw=3)
+SSR: AN
+Temp: 24.00 C | Enc: -10 | SW: los | SSR: AN
+Encoder: -11 (DT raw=4)
+Encoder: -12 (DT raw=3)
+Encoder: -13 (DT raw=5)
+Encoder: -14 (DT raw=3)
+SSR: AUS
+Temp: 24.25 C | Enc: -14 | SW: los | SSR: AUS
+Encoder: -15 (DT raw=2)
+SSR: AN
+Encoder: -16 (DT raw=5)
+SSR: AUS
+Encoder: -17 (DT raw=1)
+SSR: AN
+Temp: 25.25 C | Enc: -17 | SW: los | SSR: AN
+Temp: 24.25 C | Enc: -17 | SW: los | SSR: AN
+Encoder: -18 (DT raw=5)
+SSR: AUS
+Encoder: -19 (DT raw=1)
+SSR: AN
+Temp: 24.75 C | Enc: -19 | SW: los | SSR: AN
+Encoder: -20 (DT raw=4)
+Encoder: -21 (DT raw=0)
+Temp: 24.00 C | Enc: -21 | SW: los | SSR: AN
+Temp: 24.25 C | Enc: -21 | SW: los | SSR: AN
+Temp: 24.25 C | Enc: -21 | SW: los | SSR: AN
+Encoder: -22 (DT raw=4)
+Encoder: -23 (DT raw=3)
+Encoder: -24 (DT raw=7)
+SSR: AUS
+Encoder: -25 (DT raw=3)
+SSR: AN
+Encoder: -26 (DT raw=6)
+SSR: AUS
+Temp: 24.25 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 24.00 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 24.50 C | Enc: -26 | SW: los | SSR: AUS
+Temp: 24.00 C | Enc: -26 | SW: los | SSR: AUS
+SSR: AN
+Encoder: -27 (DT raw=5)
+SSR: AUS
+Temp: 24.75 C | Enc: -27 | SW: los | SSR: AUS
+Encoder: -28 (DT raw=3)
+SSR: AN
+Encoder: -29 (DT raw=7)
+SSR: AUS
+Encoder: -30 (DT raw=5)
+SSR: AN
+Encoder: -31 (DT raw=7)
+Encoder: -32 (DT raw=4)
+SSR: AUS
+Encoder: -33 (DT raw=4)
+SSR: AN
+Encoder: -34 (DT raw=8)
+Encoder: -35 (DT raw=3)
+SSR: AUS
+Encoder: -36 (DT raw=7)
+SSR: AN
+Encoder: -37 (DT raw=3)
+Temp: 23.75 C | Enc: -37 | SW: gedrueckt | SSR: AN
+SSR: AUS
+Encoder: -38 (DT raw=3)
+SSR: AN
+Encoder: -39 (DT raw=6)
+SSR: AUS
+Encoder: -40 (DT raw=3)
+Encoder: -41 (DT raw=2)
+Encoder: -42 (DT raw=6)
+Encoder: -43 (DT raw=3)
+Encoder: -44 (DT raw=6)
+Temp: 24.75 C | Enc: -44 | SW: gedrueckt | SSR: AUS
+Encoder: -45 (DT raw=3)
+Encoder: -46 (DT raw=6)
+Encoder: -47 (DT raw=3)
+Encoder: -48 (DT raw=7)
+SSR: AN
+Encoder: -49 (DT raw=7)
+Encoder: -50 (DT raw=3)
+Encoder: -51 (DT raw=7)
+SSR: AUS
+Encoder: -52 (DT raw=3)
+Encoder: -53 (DT raw=8)
+Encoder: -54 (DT raw=5)
+Encoder: -55 (DT raw=4)
+Temp: 24.25 C | Enc: -55 | SW: gedrueckt | SSR: AUS
+Encoder: -56 (DT raw=2)
+Encoder: -57 (DT raw=6)
+Encoder: -58 (DT raw=4)
+Encoder: -59 (DT raw=7)
+SSR: AN
+Encoder: -60 (DT raw=6)
+SSR: AUS
+Encoder: -61 (DT raw=7)
+Encoder: -62 (DT raw=4)
+Encoder: -63 (DT raw=8)
+Encoder: -64 (DT raw=3)
+SSR: AN
+Encoder: -65 (DT raw=4)
+SSR: AUS
+Encoder: -66 (DT raw=6)
+Temp: 23.75 C | Enc: -66 | SW: gedrueckt | SSR: AUS
+Encoder: -67 (DT raw=3)
+SSR: AN
+Encoder: -68 (DT raw=8)
+SSR: AUS
+Encoder: -69 (DT raw=3)
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 22.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 24.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.00 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.50 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.25 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 22.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS
+Temp: 23.75 C | Enc: -69 | SW: gedrueckt | SSR: AUS

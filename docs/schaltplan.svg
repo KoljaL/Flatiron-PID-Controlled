@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1220" viewBox="0 0 1600 1220" role="img" aria-labelledby="title desc">
+  <title id="title">Schaltplan Heizplatte – NodeMCU v2 mit ESP8266</title>
+  <desc id="desc">Verdrahtungsplan für NodeMCU v2, MAX6675, OLED, Drehencoder, SSR und 230-Volt-Heizelement mit mechanischem Thermoschutz.</desc>
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #172033; }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 15px; fill: #536078; }
+      .section { font-size: 18px; font-weight: 700; }
+      .head { font-size: 16px; font-weight: 700; }
+      .body { font-size: 14px; }
+      .small { font-size: 12px; }
+      .tiny { font-size: 11px; }
+      .muted { fill: #536078; }
+      .white { fill: #fff; }
+      .card { fill: #fff; stroke: #cbd5e1; stroke-width: 1.5; }
+      .board { fill: #173f55; stroke: #102e40; stroke-width: 2; }
+      .wire { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .signal { stroke: #475569; }
+      .power { stroke: #16a34a; }
+      .ground { stroke: #64748b; }
+      .mains-live { stroke: #dc2626; }
+      .mains-neutral { stroke: #2563eb; }
+      .earth { stroke: #15803d; }
+      .dash { stroke-dasharray: 7 6; }
+      .tag { fill: #f1f5f9; stroke: #cbd5e1; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1220" fill="#f8fafc"/>
+  <text x="48" y="54" class="title">Heizplatte · Verdrahtungs- und Schaltplan</text>
+  <text x="48" y="82" class="subtitle">NodeMCU v2 (ESP8266) · MAX6675 / Typ K · SSD1306 I²C · Drehencoder · Zero-Cross-SSR</text>
+  <rect x="48" y="105" width="1504" height="44" rx="8" fill="#e0f2fe"/>
+  <text x="68" y="133" class="body" font-weight="600">Niederspannungssteuerung und Netzspannungs-Heizkreis sind getrennte Bereiche. Leitungsführung schematisch, nicht maßstäblich.</text>
+
+  <rect x="48" y="170" width="1504" height="625" rx="14" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+  <text x="72" y="205" class="section">1 · Niederspannung / Steuerung (3,3 V)</text>
+
+  <!-- MAX6675 -->
+  <rect x="82" y="238" width="380" height="202" rx="10" class="card"/>
+  <text x="106" y="270" class="head">MAX6675-Thermoelement-Wandler</text>
+  <text x="106" y="297" class="body">Typ-K-Thermoelement → K+ / K−</text>
+  <text x="106" y="329" class="body">SCK  → D5 / GPIO14</text>
+  <text x="106" y="353" class="body">CS   → D6 / GPIO12</text>
+  <text x="106" y="377" class="body">SO   → D7 / GPIO13 (Daten zum ESP)</text>
+  <text x="106" y="400" class="body">VCC → 3V3</text>
+  <text x="106" y="423" class="body">GND → GND</text>
+
+  <!-- OLED -->
+  <rect x="82" y="474" width="380" height="206" rx="10" class="card"/>
+  <text x="106" y="506" class="head">OLED SSD1306 · I²C-Adresse 0x3C</text>
+  <text x="106" y="540" class="body">SDA → D2 / GPIO4</text>
+  <text x="106" y="566" class="body">SCL → D1 / GPIO5</text>
+  <text x="106" y="602" class="body">VCC → 3V3</text>
+  <text x="106" y="628" class="body">GND → GND</text>
+  <text x="106" y="659" class="small muted">Display: Ist-/Sollwert, Modus, Ausgangsleistung</text>
+
+  <!-- ESP board -->
+  <rect x="620" y="230" width="390" height="470" rx="16" class="board"/>
+  <text x="815" y="266" class="head white" text-anchor="middle">NodeMCU v2 · ESP8266</text>
+  <text x="815" y="290" class="small white" text-anchor="middle">D-Pins = Board-Aufdruck · GPIO in Klammern</text>
+  <line x1="645" y1="307" x2="985" y2="307" stroke="#80a9bd" stroke-width="1"/>
+  <text x="650" y="336" class="body white">D5 (GPIO14)  MAX SCK</text>
+  <text x="650" y="365" class="body white">D6 (GPIO12)  MAX CS</text>
+  <text x="650" y="394" class="body white">D7 (GPIO13)  MAX SO</text>
+  <text x="650" y="423" class="body white">D2 (GPIO4)   OLED SDA</text>
+  <text x="650" y="452" class="body white">D1 (GPIO5)   OLED SCL</text>
+  <text x="650" y="481" class="body white">3V3           Versorgung</text>
+  <text x="650" y="501" class="body white">GND           gemeinsame Masse</text>
+  <line x1="645" y1="516" x2="985" y2="516" stroke="#80a9bd" stroke-width="1"/>
+  <text x="650" y="545" class="body white">D8 (GPIO15)  SSR DC+</text>
+  <text x="650" y="574" class="body white">D0 (GPIO16)  Encoder CLK</text>
+  <text x="650" y="603" class="body white">A0            Encoder DT (analog)</text>
+  <text x="650" y="632" class="body white">D3 (GPIO0)   Encoder-Taster</text>
+  <text x="650" y="660" class="tiny white">SSR DC− → GND</text>
+
+  <!-- Signal net lines and labels -->
+  <path d="M462 329 H550 V336 H620" class="wire signal"/>
+  <path d="M462 353 H568 V365 H620" class="wire signal"/>
+  <path d="M462 377 H586 V394 H620" class="wire signal"/>
+  <path d="M462 540 H550 V423 H620" class="wire signal"/>
+  <path d="M462 566 H568 V452 H620" class="wire signal"/>
+  <path d="M462 400 H525 V481 H620" class="wire power"/>
+  <path d="M462 423 H550 V501 H620" class="wire ground"/>
+  <path d="M462 602 H568 V477 H620" class="wire power"/>
+  <path d="M462 628 H586 V501 H620" class="wire ground"/>
+
+  <!-- Encoder -->
+  <rect x="1160" y="238" width="350" height="250" rx="10" class="card"/>
+  <text x="1184" y="270" class="head">Drehencoder (ohne Modul)</text>
+  <text x="1184" y="303" class="body">Common → GND</text>
+  <text x="1184" y="331" class="body">CLK / A → D0 / GPIO16</text>
+  <text x="1184" y="359" class="body">DT / B → A0 (analogRead)</text>
+  <text x="1184" y="387" class="body">Taster → D3 / GPIO0</text>
+  <text x="1184" y="420" class="body">CLK ─[10 kΩ]─┐</text>
+  <text x="1184" y="444" class="body">DT  ─[10 kΩ]─┴→ 3V3</text>
+  <text x="1184" y="472" class="small muted">DT-Schwelle 512 · A0 maximal 3,3 V</text>
+  <path d="M1160 331 H1080 V574 H1010" class="wire signal"/>
+  <path d="M1160 359 H1100 V603 H1010" class="wire signal"/>
+  <path d="M1160 387 H1120 V632 H1010" class="wire signal"/>
+  <path d="M1160 303 H1140 V501 H1010" class="wire ground"/>
+  <path d="M1160 432 H1138 V481 H1010" class="wire power"/>
+
+  <!-- SSR control -->
+  <rect x="1160" y="524" width="350" height="128" rx="10" class="card"/>
+  <text x="1184" y="556" class="head">SSR-Steuereingang (DC)</text>
+  <text x="1184" y="586" class="body">DC+ ← D8 / GPIO15</text>
+  <text x="1184" y="612" class="body">DC− → GND</text>
+  <text x="1184" y="637" class="small muted">Zero-Cross-SSR · Datenblatt beachten*</text>
+  <path d="M1010 545 H1080 V586 H1160" class="wire signal"/>
+  <path d="M1010 660 H1100 V612 H1160" class="wire ground"/>
+
+  <!-- Safety notes low-voltage -->
+  <rect x="82" y="710" width="1428" height="66" rx="9" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5"/>
+  <text x="104" y="734" class="body" font-weight="700">Boot- und Pegelhinweise</text>
+  <text x="104" y="754" class="small">D8/GPIO15 muss beim Boot LOW sein (Board-Pulldown; extern ggf. 10 kΩ nach GND). D3/GPIO0 muss beim Boot HIGH sein: Taster beim Einschalten loslassen.</text>
+  <text x="104" y="771" class="tiny">D0 hat keinen internen Pull-up. *SSR-Eingang muss mit 3,3-V-Pegel und GPIO-Strom kompatibel sein; Datenblatt prüfen. Taster: lokale Heizungsfreigabe/Aus und temperaturgebundene Fehlerquittierung.</text>
+
+  <!-- Mains power -->
+  <rect x="48" y="820" width="1504" height="350" rx="14" fill="#fff1f2" stroke="#fecdd3" stroke-width="1.5"/>
+  <text x="72" y="856" class="section">2 · Netzspannungs-Heizkreis (230 V~) · strikt getrennt von der Steuerung</text>
+  <text x="80" y="916" class="head" fill="#991b1b">L · Phase</text>
+  <text x="80" y="1007" class="head" fill="#1e40af">N · Neutralleiter</text>
+
+  <path d="M158 908 H310" class="wire mains-live"/>
+  <rect x="310" y="882" width="190" height="54" rx="7" fill="#fff" stroke="#dc2626" stroke-width="2"/>
+  <text x="405" y="905" class="body" text-anchor="middle" font-weight="700">Sicherung</text>
+  <text x="405" y="925" class="tiny muted" text-anchor="middle">auf Leitung/Last abstimmen</text>
+  <path d="M500 908 H570" class="wire mains-live"/>
+  <rect x="570" y="882" width="245" height="54" rx="7" fill="#fff" stroke="#dc2626" stroke-width="2"/>
+  <text x="692" y="905" class="body" text-anchor="middle" font-weight="700">Thermosicherung / Thermostat</text>
+  <text x="692" y="925" class="tiny muted" text-anchor="middle">mechanisch, in Reihe</text>
+  <path d="M815 908 H900" class="wire mains-live"/>
+  <rect x="900" y="870" width="205" height="78" rx="8" fill="#fff" stroke="#7f1d1d" stroke-width="2"/>
+  <text x="1002" y="902" class="head" text-anchor="middle">SSR · Lastseite</text>
+  <text x="1002" y="926" class="small" text-anchor="middle">Zero-Cross / AC</text>
+  <path d="M1105 908 H1190" class="wire mains-live"/>
+  <rect x="1190" y="882" width="235" height="54" rx="7" fill="#fff" stroke="#dc2626" stroke-width="2"/>
+  <text x="1307" y="905" class="body" text-anchor="middle" font-weight="700">Heizelement 2 kW</text>
+  <text x="1307" y="925" class="tiny muted" text-anchor="middle">ca. 8,7 A bei 230 V</text>
+  <path d="M1425 908 H1490 V1007 H158" class="wire mains-neutral"/>
+  <text x="1330" y="993" class="small" fill="#1e40af">Rückleiter N</text>
+  <path d="M158 1052 H1307 V936" class="wire earth"/>
+  <text x="170" y="1060" class="body" fill="#166534" font-weight="700">PE → Schutzleiter an Metallgehäuse / berührbarem Heizkörper (nicht über SSR schalten)</text>
+
+  <!-- Safety callout and timing -->
+  <rect x="78" y="1100" width="1444" height="48" rx="8" fill="#7f1d1d"/>
+  <text x="98" y="1121" class="small white" font-weight="700">LEBENSGEFAHR: Netzspannungsaufbau nur durch qualifizierte Personen, berührungssicher und normgerecht.</text>
+  <text x="98" y="1140" class="tiny white">SSR passend dimensionieren (README: ≥25 A mit Kühlkörper); Sicherung und unabhängigen mechanischen Übertemperaturschutz vorsehen. Software ist kein Schutzorgan.</text>
+
+  <text x="72" y="1188" class="small muted">Firmware: MAX6675 alle 250 ms · Sollwert max. 190 °C (technische Grenze 200 °C) · verriegeltes SSR-LOW bei Sensorfehler, Messalter ≥750 ms oder Temperatur ≥215 °C.</text>
+</svg>
