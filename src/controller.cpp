@@ -506,7 +506,7 @@ namespace Controller
         if (error > BOOST_MIN_ERROR_C)
           out = max(out, WINDOW_SIZE * BOOST_OUTPUT_PERCENT / 100.0);
       }
-      if (input >= sp)
+      if (!manualMode && input >= sp)
         out = 0.0;
     }
     else
