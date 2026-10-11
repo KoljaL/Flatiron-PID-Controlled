@@ -29,6 +29,8 @@ namespace
   bool sensorHasValidReading = false;
   bool sensorValid = false;
   bool heaterEnabled = false;
+  bool manualMode = false;
+  double manualOutput = 10.0;
   bool tuning = false;
   Controller::FaultReason latchedFault = Controller::FaultReason::None;
   const char *tuneStatus = "Bereit";
@@ -196,7 +198,7 @@ namespace
   void checkThermalResponse(unsigned long now)
   {
     const bool heatingExpected =
-        (heaterEnabled || tuning) &&
+        ((heaterEnabled && !manualMode) || tuning) &&
         out * 100.0 / WINDOW_SIZE >= THERMAL_RESPONSE_MIN_OUTPUT_PERCENT &&
         sp - input >= THERMAL_RESPONSE_MIN_ERROR_C;
     if (!heatingExpected)
@@ -263,6 +265,8 @@ namespace Controller
       tuneStatus = "Abgelehnt: Fehler verriegelt";
     else if (tuning)
       tuneStatus = "Abgelehnt: Autotune laeuft bereits";
+    else if (manualMode)
+      tuneStatus = "Abgelehnt: Autotune nur im Auto-Modus";
     else if (!sensorValid || now - lastValidReading >= SENSOR_TIMEOUT)
       tuneStatus = "Abgelehnt: keine aktuelle Messung";
     else if (input > AUTOTUNE_MAX_START_TEMP)
@@ -315,13 +319,37 @@ namespace Controller
     {
       out = 0.0;
       windowStart = now;
-      pid.SetMode(AUTOMATIC);
+      pid.SetMode(manualMode ? MANUAL : AUTOMATIC);
     }
     else
     {
       pid.SetMode(MANUAL);
       resetOutputWindow(now);
     }
+    return true;
+  }
+
+  bool setManualMode(bool enabled)
+  {
+    if (tuning || latchedFault != FaultReason::None)
+      return false;
+    if (manualMode == enabled)
+      return true;
+
+    manualMode = enabled;
+    heaterEnabled = false;
+    pid.SetMode(MANUAL);
+    resetOutputWindow(millis());
+    return true;
+  }
+
+  bool setManualOutputPercent(double percent)
+  {
+    if (!isfinite(percent) || percent < 0.0 || percent > 100.0 ||
+        !manualMode || tuning || latchedFault != FaultReason::None)
+      return false;
+
+    manualOutput = percent;
     return true;
   }
 
@@ -368,7 +396,7 @@ namespace Controller
     {
       out = 0.0;
       windowStart = now;
-      pid.SetMode(AUTOMATIC);
+      pid.SetMode(manualMode ? MANUAL : AUTOMATIC);
       heaterEnabled = true;
     }
   }
@@ -462,7 +490,11 @@ namespace Controller
     }
     else if (heaterEnabled)
     {
-      if (newSensorReading)
+      if (manualMode)
+      {
+        out = WINDOW_SIZE * manualOutput / 100.0;
+      }
+      else if (newSensorReading)
       {
         const double error = sp - pidInput;
         const double effectiveKi =
@@ -508,6 +540,8 @@ namespace Controller
   double kd() { return Kd; }
   bool isTuning() { return tuning; }
   bool isHeaterEnabled() { return heaterEnabled; }
+  bool isManualMode() { return manualMode; }
+  double manualOutputPercent() { return manualOutput; }
   bool hasValidReading()
   {
     return sensorValid && millis() - lastValidReading < SENSOR_TIMEOUT;

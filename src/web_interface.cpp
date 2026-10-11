@@ -163,6 +163,8 @@ namespace WebInterface
       doc["tuning"] = Controller::isTuning();
       doc["tuningStatus"] = Controller::autotuneStatus();
       doc["heaterEnabled"] = Controller::isHeaterEnabled();
+      doc["manualMode"] = Controller::isManualMode();
+      doc["manualOutput"] = Controller::manualOutputPercent();
       doc["validReading"] = Controller::hasValidReading();
       doc["sensorState"] = Controller::sensorStatusText();
       doc["tuningSuggestion"] = Controller::hasTuningSuggestion();
@@ -241,6 +243,56 @@ namespace WebInterface
         return;
       }
       request->send(200, "text/plain; charset=utf-8", value == "1" ? "Heizung eingeschaltet" : "Heizung ausgeschaltet"); });
+
+    server.on("/mode", HTTP_POST, [](AsyncWebServerRequest *request)
+              {
+      if (!request->hasParam("value"))
+      {
+        request->send(400, "text/plain; charset=utf-8", "Parameter value fehlt");
+        return;
+      }
+      const String value = request->getParam("value")->value();
+      if (value != "auto" && value != "manual")
+      {
+        request->send(400, "text/plain; charset=utf-8", "value muss auto oder manual sein");
+        return;
+      }
+      if (!Controller::setManualMode(value == "manual"))
+      {
+        request->send(409, "text/plain; charset=utf-8",
+                      Controller::hasFault() ? "Moduswechsel wegen verriegeltem Fehler gesperrt" :
+                                               "Moduswechsel waehrend Autotune gesperrt");
+        return;
+      }
+      request->send(200, "text/plain; charset=utf-8",
+                    value == "manual" ? "Manueller Testmodus aktiv; Heizung ausgeschaltet" :
+                                        "Auto-Modus aktiv; Heizung ausgeschaltet"); });
+
+    server.on("/manual-output", HTTP_POST, [](AsyncWebServerRequest *request)
+              {
+      if (!request->hasParam("value"))
+      {
+        request->send(400, "text/plain; charset=utf-8", "Parameter value fehlt");
+        return;
+      }
+      const String rawValue = request->getParam("value")->value();
+      char *end = nullptr;
+      const double value = strtod(rawValue.c_str(), &end);
+      if (end == rawValue.c_str() || *end != '\0' || !isfinite(value) ||
+          value < 0.0 || value > 100.0)
+      {
+        request->send(400, "text/plain; charset=utf-8", "Ausgang muss zwischen 0 und 100 Prozent liegen");
+        return;
+      }
+      if (!Controller::setManualOutputPercent(value))
+      {
+        request->send(409, "text/plain; charset=utf-8",
+                      Controller::hasFault() ? "Manueller Ausgang wegen verriegeltem Fehler gesperrt" :
+                      Controller::isTuning() ? "Manueller Ausgang waehrend Autotune gesperrt" :
+                                               "Manueller Ausgang nur im manuellen Modus verfuegbar");
+        return;
+      }
+      request->send(200, "text/plain; charset=utf-8", "OK"); });
 
     server.on("/setpoint", HTTP_POST, [](AsyncWebServerRequest *request)
               {

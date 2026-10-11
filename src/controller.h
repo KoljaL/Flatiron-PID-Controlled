@@ -17,6 +17,8 @@ namespace Controller
   bool cancelAutotune();
   bool adjustSetpoint(double delta);
   bool setHeaterEnabled(bool enabled);
+  bool setManualMode(bool enabled);
+  bool setManualOutputPercent(double percent);
   void localButtonPressed();
 
   double temperature();
@@ -28,6 +30,8 @@ namespace Controller
   double kd();
   bool isTuning();
   bool isHeaterEnabled();
+  bool isManualMode();
+  double manualOutputPercent();
   bool hasValidReading();
   const char *sensorStatusText();
   bool hasFault();

@@ -36,13 +36,18 @@ static const char index_html[] PROGMEM = R"rawliteral(
         .setpoint-control { display: flex; align-items: center; justify-content: center; gap: 10px; }
         .setpoint-control button { width: 32px; height: 32px; padding: 0 0 2px; border: 1px solid var(--border); border-radius: 50%; background: var(--blue); color: var(--bg); font-size: 20px; line-height: 1; cursor: pointer; }
         .setpoint-control .value { min-width: 82px; margin: 0; }
+        .mode-control { min-width: 140px; }
+        .mode-control select { max-width: 100%; padding: 7px; background: var(--bg); color: var(--fg); border: 1px solid var(--border); border-radius: 4px; }
+        .manual-output-control { margin-top: 8px; }
+        .manual-output-control input { width: 140px; max-width: 100%; vertical-align: middle; }
         #tuning-report { width: 80%; box-sizing: border-box; margin: 24px auto; padding: 16px; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 8px; }
         #tuning-report select { max-width: 100%; margin: 12px 0; padding: 8px; }
         #tuning-report pre { max-height: 32rem; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
         #tuning-log { width: 80%; box-sizing: border-box; margin: 24px auto; padding: 16px; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 8px; }
         #tuning-log pre { max-height: 16rem; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 13px; }
         #chart-container { width: 80%; box-sizing: border-box; margin: 0 auto; background: var(--card); padding: 20px; border-radius: 8px; border: 1px solid var(--border); }
-        @media (max-width: 600px) { .page-header, #tuning-report, #tuning-log, #chart-container { width: 100%; } .logo { width: 52px; height: 52px; } .page-header h1 { font-size: 24px; } .page-header { flex-wrap: wrap; } .temperature-card { flex-direction: row; gap: 10px; margin-left: 0; width: 100%; min-width: 0; } .temperature-card > div { min-width: 0; flex: 1; } .pid-card { width: 100%; } }
+        @media (max-width: 900px) { .page-header { flex-wrap: wrap; justify-content: center; } .temperature-card { margin-left: 0; } }
+        @media (max-width: 600px) { .page-header, #tuning-report, #tuning-log, #chart-container { width: 100%; } .logo { width: 52px; height: 52px; } .page-header h1 { font-size: 24px; } .temperature-card { flex-wrap: wrap; gap: 10px; width: 100%; min-width: 0; } .temperature-card > div { min-width: 0; flex: 1 1 40%; } .temperature-card .mode-control { flex-basis: 100%; } .pid-card { width: 100%; } }
     </style>
 </head>
 <body>
@@ -69,6 +74,20 @@ static const char index_html[] PROGMEM = R"rawliteral(
                 <button id="setpoint-down" type="button" onclick="changeSetpoint(-5)" aria-label="Solltemperatur um 5 Grad senken">−</button>
                 <p class="value"><span id="setpoint">--</span> °C</p>
                 <button id="setpoint-up" type="button" onclick="changeSetpoint(5)" aria-label="Solltemperatur um 5 Grad erhöhen">+</button>
+            </div>
+        </div>
+        <div class="mode-control">
+            <h3>Betriebsart</h3>
+            <select id="control-mode" aria-label="Betriebsart" onchange="changeControlMode(this.value)">
+                <option value="auto">Auto (PID)</option>
+                <option value="manual">Manuell (Test)</option>
+            </select>
+            <div id="manual-output-control" class="manual-output-control" hidden>
+                <label for="manual-output">SSR: <span id="manual-output-value">10</span>%</label><br>
+                <input id="manual-output" type="range" min="0" max="100" step="1" value="10"
+                       aria-label="Manueller SSR-Ausgang in Prozent"
+                       oninput="document.getElementById('manual-output-value').innerText = this.value"
+                       onchange="setManualOutput(this.value)">
             </div>
         </div>
     </section>
@@ -348,13 +367,24 @@ static const char index_html[] PROGMEM = R"rawliteral(
                 document.getElementById('ki').innerText = data.ki.toFixed(2);
                 document.getElementById('kd').innerText = data.kd.toFixed(2);
                 document.getElementById('output').innerText = Number(data.output).toFixed(1);
+                const modeSelect = document.getElementById('control-mode');
+                modeSelect.value = data.manualMode ? 'manual' : 'auto';
+                modeSelect.disabled = !data.controlsEnabled || data.fault || data.tuning;
+                const manualOutput = document.getElementById('manual-output');
+                if (!manualOutput.matches(':active')) {
+                    manualOutput.value = data.manualOutput;
+                    document.getElementById('manual-output-value').innerText = data.manualOutput;
+                }
+                manualOutput.disabled = !data.controlsEnabled || !data.manualMode || data.fault || data.tuning;
+                document.getElementById('manual-output-control').hidden = !data.manualMode;
                 const state = document.getElementById('heater-state');
                 state.innerText = !data.controlsEnabled
                     ? 'Web-Steuerung deaktiviert'
                     : data.fault
                         ? 'HEIZUNG AUS – ' + data.faultReason + ' (verriegelt) – Sensor jetzt: ' + data.sensorState
                         : (data.tuning ? 'Autotune aktiv – Heizung wird geregelt' :
-                           data.heaterEnabled ? 'Heizung eingeschaltet' : 'Heizung ausgeschaltet') +
+                           data.heaterEnabled ? (data.manualMode ? 'Manuelle Testleistung aktiv' : 'Heizung eingeschaltet') :
+                           data.manualMode ? 'Manueller Testmodus – Heizung ausgeschaltet' : 'Heizung ausgeschaltet') +
                           ' – Sensor: ' + data.sensorState;
                 document.getElementById('tuning-status').innerText = 'Autotune: ' + data.tuningStatus;
                 document.getElementById('tuning-suggestion').innerText = data.tuningSuggestion
@@ -363,7 +393,7 @@ static const char index_html[] PROGMEM = R"rawliteral(
                     : '';
                 const tuneButton = document.getElementById('tune-button');
                 tuneButton.innerText = data.tuning ? 'Autotune abbrechen' : 'Autotune starten';
-                tuneButton.disabled = !data.controlsEnabled;
+                tuneButton.disabled = !data.controlsEnabled || (data.manualMode && !data.tuning);
                 const heaterButton = document.getElementById('heater-button');
                 heaterButton.innerText = data.heaterEnabled ? 'Heizung ausschalten' : 'Heizung einschalten';
                 heaterButton.disabled = !data.controlsEnabled || data.fault || data.tuning ||
@@ -454,7 +484,12 @@ static const char index_html[] PROGMEM = R"rawliteral(
         async function toggleHeater() {
             const button = document.getElementById('heater-button');
             const turningOn = button.innerText === 'Heizung einschalten';
-            if (turningOn && !confirm('Heizung einschalten? Stelle sicher, dass die Heizplatte beaufsichtigt wird und eine unabhängige Temperaturabschaltung vorhanden ist.')) return;
+            const mode = document.getElementById('control-mode').value;
+            const confirmation = mode === 'manual'
+                ? 'Manuelle Testheizung mit ' + document.getElementById('manual-output').value +
+                  '% SSR-Ausgang einschalten? Nur beaufsichtigt und mit unabhängiger Temperaturabschaltung testen.'
+                : 'Heizung einschalten? Stelle sicher, dass die Heizplatte beaufsichtigt wird und eine unabhängige Temperaturabschaltung vorhanden ist.';
+            if (turningOn && !confirm(confirmation)) return;
             button.disabled = true;
             try {
                 const response = await fetch('/heater?enabled=' + (turningOn ? '1' : '0'), { method: 'POST' });
@@ -465,6 +500,35 @@ static const char index_html[] PROGMEM = R"rawliteral(
                 document.getElementById('heater-state').innerText = error.message;
             } finally {
                 button.disabled = false;
+                await updateData();
+            }
+        }
+        async function changeControlMode(value) {
+            const mode = value === 'manual' ? 'manual' : 'auto';
+            const label = mode === 'manual' ? 'Manuell (Test)' : 'Auto (PID)';
+            if (!confirm('Betriebsart auf ' + label + ' wechseln? Die Heizung wird dabei ausgeschaltet.')) {
+                await updateData();
+                return;
+            }
+            const select = document.getElementById('control-mode');
+            select.disabled = true;
+            try {
+                const response = await fetch('/mode?value=' + mode, { method: 'POST' });
+                const message = await response.text();
+                if (!response.ok) throw new Error(message);
+                await updateData();
+            } catch (error) {
+                document.getElementById('heater-state').innerText = error.message;
+                await updateData();
+            }
+        }
+        async function setManualOutput(value) {
+            try {
+                const response = await fetch('/manual-output?value=' + encodeURIComponent(value), { method: 'POST' });
+                const message = await response.text();
+                if (!response.ok) throw new Error(message);
+            } catch (error) {
+                document.getElementById('heater-state').innerText = error.message;
                 await updateData();
             }
         }
