@@ -17,16 +17,16 @@ sind **formal korrekt umgesetzt**.
 Der Review zeigt aber, dass **mehrere Dinge nicht das tun, was README und Bedenken-Dokumente beschreiben bzw.
 beabsichtigen**. Die wichtigsten:
 
-| # | Kernaussage |
-|---|---|
-| 🔴 F-05 | Ein „festhängender“ Sensorwert (z. B. `0,00 °C` bei gebrochener SO/SCK-Leitung) wird als **gültig** akzeptiert → Dauerheizen, Software-Not-Aus (215 °C) kann nie greifen. |
-| 🔴 F-06 | Die 750-ms-Sensor-Timeouts sind **konstruktionsbedingt unerreichbar** (synchrone Messung). Gegen einen echten Firmware-Hänger (Soft-WDT ≈ 3,2 s) schützt die Software nicht; es gibt keinen Hardware-Watchdog. |
+| #      | Kernaussage                                                                                                                                                                                                                                                                                             |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 🔴 F-05 | Ein „festhängender“ Sensorwert (z. B. `0,00 °C` bei gebrochener SO/SCK-Leitung) wird als **gültig** akzeptiert → Dauerheizen, Software-Not-Aus (215 °C) kann nie greifen.                                                                                                                               |
+| 🔴 F-06 | Die 750-ms-Sensor-Timeouts sind **konstruktionsbedingt unerreichbar** (synchrone Messung). Gegen einen echten Firmware-Hänger (Soft-WDT ≈ 3,2 s) schützt die Software nicht; es gibt keinen Hardware-Watchdog.                                                                                          |
 | 🟠 F-01 | **Autotune kann mit den vorgegebenen Parametern praktisch nie erfolgreich enden**: Die Bibliothek schwingt um die *Starttemperatur* (nicht um den Sollwert), und selbst 5 % Leistung (≈ 100 W) heizen die Sohle weiter hoch → Abbruch bei 120 °C/Timeout. Das Sollwert-Gate „20–80 °C“ ist wirkungslos. |
-| 🟠 F-02 | Der **Integralanteil wird bei jedem Erreichen des Sollwerts gelöscht** (`SetMode(MANUAL→AUTOMATIC)`); die Regelung degeneriert zu P+D mit Dauerschwingung (Simulation: ±10–20 K Hub statt < 1 K). |
-| 🟠 F-03 | PID-Abtastzeit (100 ms), Sensorabtastung (250 ms) und PWM-Fenster (1 s) passen nicht zusammen; der **D-Anteil (Kd = 55) verstärkt 0,25-K-Quantisierung und reales Messrauschen** (Logs: σ = 0,25 K im Ruhezustand). |
-| 🟠 F-04 | `/history` puffert ~42 KB im knappen Heap, mit **quadratischem Realloc-Aufwand** → Sekunden-Blockaden, Speicherfehler, Soft-WDT; das Diagramm wird nach ca. 30–60 min unzuverlässig. |
-| 🟠 F-07 | Die ungeschützten POST-Endpunkte sind per **CSRF** von *jeder Webseite* im Browser eines WLAN-Teilnehmers auslösbar – nicht nur von „Geräten im WLAN“. |
-| 🟠 F-08 | Ein **Reset/Stromausfall löscht die Fehlerverriegelung** – im direkten Widerspruch zu `bedenken-report.md` §2.5. |
+| 🟠 F-02 | Der **Integralanteil wird bei jedem Erreichen des Sollwerts gelöscht** (`SetMode(MANUAL→AUTOMATIC)`); die Regelung degeneriert zu P+D mit Dauerschwingung (Simulation: ±10–20 K Hub statt < 1 K).                                                                                                       |
+| 🟠 F-03 | PID-Abtastzeit (100 ms), Sensorabtastung (250 ms) und PWM-Fenster (1 s) passen nicht zusammen; der **D-Anteil (Kd = 55) verstärkt 0,25-K-Quantisierung und reales Messrauschen** (Logs: σ = 0,25 K im Ruhezustand).                                                                                     |
+| 🟠 F-04 | `/history` puffert ~42 KB im knappen Heap, mit **quadratischem Realloc-Aufwand** → Sekunden-Blockaden, Speicherfehler, Soft-WDT; das Diagramm wird nach ca. 30–60 min unzuverlässig.                                                                                                                    |
+| 🟠 F-07 | Die ungeschützten POST-Endpunkte sind per **CSRF** von *jeder Webseite* im Browser eines WLAN-Teilnehmers auslösbar – nicht nur von „Geräten im WLAN“.                                                                                                                                                  |
+| 🟠 F-08 | Ein **Reset/Stromausfall löscht die Fehlerverriegelung** – im direkten Widerspruch zu `bedenken-report.md` §2.5.                                                                                                                                                                                        |
 
 Zusätzlich fehlen **Versionskontrolle (kein Git-Repo), automatisierte Tests, CI** und es existiert **kein einziger
 aufgezeichneter Heiz-/Regelversuch** (in allen Logs mit Regelzeilen: SSR nie aktiv, max. 75,5 °C von außen). Die Prüfstufen 1–6 aus
@@ -39,14 +39,14 @@ mit Netzlast über Niedrigtemperaturtests hinaus betreiben und **Autotune nicht 
 
 ## 1. Methodik und Grenzen
 
-| Maßnahme | Ergebnis |
-|---|---|
-| Vollständige Lektüre aller Quelldateien (`controller`, `ui`, `web_interface`, `web_page`, `main`, `config`, `hardware_test`) | siehe Funde |
-| Lektüre der **Bibliotheksquellen** `PID_v1`, `PID_AutoTune_v0`, Adafruit `MAX6675`, `ESPAsyncWebServer` (`AsyncResponseStream`), ESP8266-Core (`cbuf`, `Print`) | Verhalten wurde am Code verifiziert, nicht angenommen |
-| `pio run -e nodemcuv2` | **Build OK**; RAM 55,0 % (45 080 / 81 920 B statisch), Flash 34,5 % |
-| `pio check` (cppcheck) | keine echten Defekte in `src/` (nur Stil/„unusedFunction“-Artefakte) |
-| Auswertung der 32 Logs in `logs/` (7 davon mit Regelzeilen) | Rauschen, Stall-Ereignisse, Abdeckung (siehe F-03, F-24) |
-| **Host-Simulation** (C++, Original-`PID_v1.cpp`/`PID_AutoTune_v0.cpp`, Reglerlogik 1:1 nachgebildet, Zwei-Massen-Modell der Sohle) | Abschnitt 5; war temporär außerhalb des Projekts und ist **nicht Teil der Lieferung** |
+| Maßnahme                                                                                                                                                        | Ergebnis                                                                              |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Vollständige Lektüre aller Quelldateien (`controller`, `ui`, `web_interface`, `web_page`, `main`, `config`, `hardware_test`)                                    | siehe Funde                                                                           |
+| Lektüre der **Bibliotheksquellen** `PID_v1`, `PID_AutoTune_v0`, Adafruit `MAX6675`, `ESPAsyncWebServer` (`AsyncResponseStream`), ESP8266-Core (`cbuf`, `Print`) | Verhalten wurde am Code verifiziert, nicht angenommen                                 |
+| `pio run -e nodemcuv2`                                                                                                                                          | **Build OK**; RAM 55,0 % (45 080 / 81 920 B statisch), Flash 34,5 %                   |
+| `pio check` (cppcheck)                                                                                                                                          | keine echten Defekte in `src/` (nur Stil/„unusedFunction“-Artefakte)                  |
+| Auswertung der 32 Logs in `logs/` (7 davon mit Regelzeilen)                                                                                                     | Rauschen, Stall-Ereignisse, Abdeckung (siehe F-03, F-24)                              |
+| **Host-Simulation** (C++, Original-`PID_v1.cpp`/`PID_AutoTune_v0.cpp`, Reglerlogik 1:1 nachgebildet, Zwei-Massen-Modell der Sohle)                              | Abschnitt 5; war temporär außerhalb des Projekts und ist **nicht Teil der Lieferung** |
 
 **Grenzen (bitte beachten):**
 
@@ -65,33 +65,33 @@ mit Netzlast über Niedrigtemperaturtests hinaus betreiben und **Autotune nicht 
 Legende: 🔴 kritisch (kann ohne weitere Schutzebene zu Überhitzung führen) · 🟠 hoch (Funktion/Sicherheit/Stabilität
 deutlich beeinträchtigt) · 🟡 mittel · ⚪ niedrig/Hinweis.
 
-| ID | Sev. | Titel | Ort |
-|---|---|---|---|
-| F-05 | 🔴 | Festhängende/Null-Messwerte werden akzeptiert; keine Heiz-Plausibilisierung | [controller.cpp](src/controller.cpp#L327) |
-| F-06 | 🔴 | Sensor-Timeouts unerreichbar; kein Schutz vor Firmware-Hänger | [controller.cpp](src/controller.cpp#L349) |
-| F-01 | 🟠 | Autotune konvergiert praktisch nie; Sollwert wird ignoriert; ZN-PID neigt zu Überschwingen | [controller.cpp](src/controller.cpp#L191) |
-| F-02 | 🟠 | Integralanteil wird bei Sollwertdurchgang gelöscht | [controller.cpp](src/controller.cpp#L379) |
-| F-03 | 🟠 | Abtastzeit-Mismatch, D-Anteil verstärkt Quantisierung/Rauschen | [controller.cpp](src/controller.cpp#L21) |
-| F-04 | 🟠 | `/history`: Heap + quadratischer Realloc; 63 % konstanter Payload | [web_interface.cpp](src/web_interface.cpp#L69) |
-| F-07 | 🟠 | CSRF/DNS-Rebinding auf Steuerrouten | [web_interface.cpp](src/web_interface.cpp#L103) |
-| F-08 | 🟠 | Reset löscht Fehlerverriegelung (Bedenken-Report §2.5 verletzt) | [controller.cpp](src/controller.cpp#L39) |
-| F-09 | 🟡 | Lokaler Taster schaltet **ein**, auch auf dem Startscreen („weiter“) | [ui.cpp](src/ui.cpp#L72) |
-| F-10 | 🟡 | Nachheiz-Reserve 215→230 °C bei Vollleistung nicht ausreichend; kein prädiktiver Abschaltpfad | [config.h](src/config.h) |
-| F-11 | 🟡 | `latchFault`: `Serial.printf` vor SSR-LOW | [controller.cpp](src/controller.cpp#L111) |
-| F-12 | 🟡 | Darstellungsfehler: Ki „0.01“, PWM-Verlauf nur 0/1 | [web_page.h](src/web_page.h#L351), [web_interface.cpp](src/web_interface.cpp#L88) |
-| F-13 | 🟡 | Chart.js ungepinnt/ohne SRI; ohne Internet bricht das JS komplett ab | [web_page.h](src/web_page.h#L13) |
-| F-14 | 🟡 | OLED-Texte zu breit (155 px > 128 px) | [ui.cpp](src/ui.cpp#L120) |
-| F-15 | 🟡 | Autotune-Bericht nur im Browser (Tab-Pflicht, Quota, Redundanz, Text-Parsing) | [web_page.h](src/web_page.h#L229) |
-| F-16 | 🟡 | Kein Übernehmen/Persistieren von Parametern; konstante Kp/Ki/Kd-Serien | [controller.cpp](src/controller.cpp#L57) |
-| F-17 | ⚪ | Duplizierte Konstanten, wirkungslose Schalter (`SETPOINT_ABSOLUTE_MAX`, `controlsEnabled`) | mehrere |
-| F-18 | ⚪ | Ein einzelner ungültiger Wert verriegelt dauerhaft (Verfügbarkeit) | [controller.cpp](src/controller.cpp#L331) |
-| F-19 | ⚪ | PWM-Fenster: Pulse werden bei Ausgangsänderung zerteilt; keine Halbwellen-Quantisierung | [controller.cpp](src/controller.cpp#L399) |
-| F-20 | ⚪ | Encoder: Polling ohne Entprellung/Quadraturdekodierung | [ui.cpp](src/ui.cpp#L79) |
-| F-21 | ⚪ | `hardware_test.cpp` wird immer mitkompiliert (2. U8g2-Instanz) | [hardware_test.cpp](src/hardware_test.cpp) |
-| F-22 | ⚪ | `platformio.ini`: ungenutzte/ungepinnte Libs, keine Flags, keine Test-Umgebung | [platformio.ini](platformio.ini) |
-| F-23 | ⚪ | Dokumentationsdrift (`bedenken-report.md` veraltet, Einzel-Absätze zu lang) | Doku |
-| F-24 | ⚪ | Kein Git, keine Tests, keine CI; Logs ohne Heizversuch und von altem Stand | Projekt |
-| F-25 | ⚪ | Plattform: ESP8266 hat keine Hardware-Sicherheitsmerkmale (Hinweis) | Architektur |
+| ID   | Sev. | Titel                                                                                         | Ort                                                                               |
+| ---- | ---- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| F-05 | 🔴    | Festhängende/Null-Messwerte werden akzeptiert; keine Heiz-Plausibilisierung                   | [controller.cpp](src/controller.cpp#L327)                                         |
+| F-06 | 🔴    | Sensor-Timeouts unerreichbar; kein Schutz vor Firmware-Hänger                                 | [controller.cpp](src/controller.cpp#L349)                                         |
+| F-01 | 🟠    | Autotune konvergiert praktisch nie; Sollwert wird ignoriert; ZN-PID neigt zu Überschwingen    | [controller.cpp](src/controller.cpp#L191)                                         |
+| F-02 | 🟠    | Integralanteil wird bei Sollwertdurchgang gelöscht                                            | [controller.cpp](src/controller.cpp#L379)                                         |
+| F-03 | 🟠    | Abtastzeit-Mismatch, D-Anteil verstärkt Quantisierung/Rauschen                                | [controller.cpp](src/controller.cpp#L21)                                          |
+| F-04 | 🟠    | `/history`: Heap + quadratischer Realloc; 63 % konstanter Payload                             | [web_interface.cpp](src/web_interface.cpp#L69)                                    |
+| F-07 | 🟠    | CSRF/DNS-Rebinding auf Steuerrouten                                                           | [web_interface.cpp](src/web_interface.cpp#L103)                                   |
+| F-08 | 🟠    | Reset löscht Fehlerverriegelung (Bedenken-Report §2.5 verletzt)                               | [controller.cpp](src/controller.cpp#L39)                                          |
+| F-09 | 🟡    | Lokaler Taster schaltet **ein**, auch auf dem Startscreen („weiter“)                          | [ui.cpp](src/ui.cpp#L72)                                                          |
+| F-10 | 🟡    | Nachheiz-Reserve 215→230 °C bei Vollleistung nicht ausreichend; kein prädiktiver Abschaltpfad | [config.h](src/config.h)                                                          |
+| F-11 | 🟡    | `latchFault`: `Serial.printf` vor SSR-LOW                                                     | [controller.cpp](src/controller.cpp#L111)                                         |
+| F-12 | 🟡    | Darstellungsfehler: Ki „0.01“, PWM-Verlauf nur 0/1                                            | [web_page.h](src/web_page.h#L351), [web_interface.cpp](src/web_interface.cpp#L88) |
+| F-13 | 🟡    | Chart.js ungepinnt/ohne SRI; ohne Internet bricht das JS komplett ab                          | [web_page.h](src/web_page.h#L13)                                                  |
+| F-14 | 🟡    | OLED-Texte zu breit (155 px > 128 px)                                                         | [ui.cpp](src/ui.cpp#L120)                                                         |
+| F-15 | 🟡    | Autotune-Bericht nur im Browser (Tab-Pflicht, Quota, Redundanz, Text-Parsing)                 | [web_page.h](src/web_page.h#L229)                                                 |
+| F-16 | 🟡    | Kein Übernehmen/Persistieren von Parametern; konstante Kp/Ki/Kd-Serien                        | [controller.cpp](src/controller.cpp#L57)                                          |
+| F-17 | ⚪    | Duplizierte Konstanten, wirkungslose Schalter (`SETPOINT_ABSOLUTE_MAX`, `controlsEnabled`)    | mehrere                                                                           |
+| F-18 | ⚪    | Ein einzelner ungültiger Wert verriegelt dauerhaft (Verfügbarkeit)                            | [controller.cpp](src/controller.cpp#L331)                                         |
+| F-19 | ⚪    | PWM-Fenster: Pulse werden bei Ausgangsänderung zerteilt; keine Halbwellen-Quantisierung       | [controller.cpp](src/controller.cpp#L399)                                         |
+| F-20 | ⚪    | Encoder: Polling ohne Entprellung/Quadraturdekodierung                                        | [ui.cpp](src/ui.cpp#L79)                                                          |
+| F-21 | ⚪    | `hardware_test.cpp` wird immer mitkompiliert (2. U8g2-Instanz)                                | [hardware_test.cpp](src/hardware_test.cpp)                                        |
+| F-22 | ⚪    | `platformio.ini`: ungenutzte/ungepinnte Libs, keine Flags, keine Test-Umgebung                | [platformio.ini](platformio.ini)                                                  |
+| F-23 | ⚪    | Dokumentationsdrift (`bedenken-report.md` veraltet, Einzel-Absätze zu lang)                   | Doku                                                                              |
+| F-24 | ⚪    | Kein Git, keine Tests, keine CI; Logs ohne Heizversuch und von altem Stand                    | Projekt                                                                           |
+| F-25 | ⚪    | Plattform: ESP8266 hat keine Hardware-Sicherheitsmerkmale (Hinweis)                           | Architektur                                                                       |
 
 ---
 
@@ -99,47 +99,47 @@ deutlich beeinträchtigt) · 🟡 mittel · ⚪ niedrig/Hinweis.
 
 ### 3.1 `bedenken.md`
 
-| Anforderung | Status | Anmerkung |
-|---|---|---|
-| Kp = 1,8 / Ki = 0,005 / Kd = 55 | ✅ | [controller.cpp](src/controller.cpp#L20). Wirkung jedoch durch F-02/F-03 stark verändert. |
-| Autotune: Noiseband 1,5; Basis 10 %; Sprung 5 %; Lookback 10 s | ✅ formal | [controller.cpp](src/controller.cpp#L209). **Funktional ineffektiv (F-01).** |
-| Sensor-Timeout ≤ 750 ms, Ausgang sofort 0 | ⚠️ | Konstante 750 ms ✅, Ausgang sofort 0 bei NaN ✅ (≤ 250 ms Latenz). Timeout-Pfad selbst ist toter Code (F-06). Stuck-Werte nicht erkannt (F-05). |
-| SETPOINT_MAX 190 (max. 200); MAX_TEMP 215 | ✅ | 200 °C-Grenze ist im Code wirkungslos, weil direkt danach auf 190 geklammert wird (F-17). |
-| Nachheizen/Thermal Runaway beachten | ⚠️ | Nur statische 215 °C. Kein prädiktiver Pfad; Reserve laut Modell bei Vollleistung unzureichend (F-10). |
-| PWM-Wellen im Live-Betrieb prüfen | ⚠️ offen | 100-ms-Diagnose-CSV vorhanden ✅; **keine Messung, kein Auswertewerkzeug** (F-24). |
+| Anforderung                                                    | Status   | Anmerkung                                                                                                                                      |
+| -------------------------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Kp = 1,8 / Ki = 0,005 / Kd = 55                                | ✅        | [controller.cpp](src/controller.cpp#L20). Wirkung jedoch durch F-02/F-03 stark verändert.                                                      |
+| Autotune: Noiseband 1,5; Basis 10 %; Sprung 5 %; Lookback 10 s | ✅ formal | [controller.cpp](src/controller.cpp#L209). **Funktional ineffektiv (F-01).**                                                                   |
+| Sensor-Timeout ≤ 750 ms, Ausgang sofort 0                      | ⚠️        | Konstante 750 ms ✅, Ausgang sofort 0 bei NaN ✅ (≤ 250 ms Latenz). Timeout-Pfad selbst ist toter Code (F-06). Stuck-Werte nicht erkannt (F-05). |
+| SETPOINT_MAX 190 (max. 200); MAX_TEMP 215                      | ✅        | 200 °C-Grenze ist im Code wirkungslos, weil direkt danach auf 190 geklammert wird (F-17).                                                      |
+| Nachheizen/Thermal Runaway beachten                            | ⚠️        | Nur statische 215 °C. Kein prädiktiver Pfad; Reserve laut Modell bei Vollleistung unzureichend (F-10).                                         |
+| PWM-Wellen im Live-Betrieb prüfen                              | ⚠️ offen  | 100-ms-Diagnose-CSV vorhanden ✅; **keine Messung, kein Auswertewerkzeug** (F-24).                                                              |
 
 ### 3.2 `bedenken-report.md`
 
-| Abschnitt | Status | Anmerkung |
-|---|---|---|
-| 2.1 Zentrale Grenzwerte | ✅ | [config.h](src/config.h) |
-| 2.2 Fail-safe-Reihenfolge (Messung → Check → sofort LOW → Latch → PID) | ✅ mit Abweichung | `Serial.printf` läuft **vor** `digitalWrite(LOW)` (F-11). |
-| 2.2 `/data` liefert `fault`, `faultReason`, `output`, `tuning` | ✅ | |
-| 2.2 OLED „HEIZUNG AUS – Ursache“ | ⚠️ | Text wird abgeschnitten (F-14). |
-| 2.3 Fensterneustart bei Start/Fehler/Autotune-Ende | ✅ | `resetOutputWindow()` |
-| 2.3 Hochaufgelöste Protokollierung | ✅ | `D`-Zeilen alle 100 ms. Kein Auswerte-Tooling. |
-| 2.4 Autotune begrenzen, Start verweigern, Zeit-/Temperaturgrenze, Ergebnisprüfung, nur Vorschlag | ✅ formal | Aber F-01; Vorschlag nicht übernehmbar (F-16). |
-| 2.5 Taster als **Aus-/Quittiertaster** | ⚠️ | Taster schaltet auch **ein** (F-09; README dokumentiert das bewusst). |
-| 2.5 „Ein Reset darf niemals einen übertemperaturbedingten Fehler ohne Abkühl-/Ursachenprüfung freigeben“ | ❌ | Fehler nur im RAM (F-08). |
+| Abschnitt                                                                                                                        | Status               | Anmerkung                                                                                                               |
+| -------------------------------------------------------------------------------------------------------------------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| 2.1 Zentrale Grenzwerte                                                                                                          | ✅                    | [config.h](src/config.h)                                                                                                |
+| 2.2 Fail-safe-Reihenfolge (Messung → Check → sofort LOW → Latch → PID)                                                           | ✅ mit Abweichung     | `Serial.printf` läuft **vor** `digitalWrite(LOW)` (F-11).                                                               |
+| 2.2 `/data` liefert `fault`, `faultReason`, `output`, `tuning`                                                                   | ✅                    |                                                                                                                         |
+| 2.2 OLED „HEIZUNG AUS – Ursache“                                                                                                 | ⚠️                    | Text wird abgeschnitten (F-14).                                                                                         |
+| 2.3 Fensterneustart bei Start/Fehler/Autotune-Ende                                                                               | ✅                    | `resetOutputWindow()`                                                                                                   |
+| 2.3 Hochaufgelöste Protokollierung                                                                                               | ✅                    | `D`-Zeilen alle 100 ms. Kein Auswerte-Tooling.                                                                          |
+| 2.4 Autotune begrenzen, Start verweigern, Zeit-/Temperaturgrenze, Ergebnisprüfung, nur Vorschlag                                 | ✅ formal             | Aber F-01; Vorschlag nicht übernehmbar (F-16).                                                                          |
+| 2.5 Taster als **Aus-/Quittiertaster**                                                                                           | ⚠️                    | Taster schaltet auch **ein** (F-09; README dokumentiert das bewusst).                                                   |
+| 2.5 „Ein Reset darf niemals einen übertemperaturbedingten Fehler ohne Abkühl-/Ursachenprüfung freigeben“                         | ❌                    | Fehler nur im RAM (F-08).                                                                                               |
 | 2.5 „Webzugriffe dürfen Heizung nicht stillschweigend starten“; Zugriffsschutz oder Deaktivierung der Steuerrouten „vorzuziehen“ | ⚠️ bewusst abgewichen | README dokumentiert „keine Authentifizierung“ und Web-Einschalten. CSRF macht das Risiko größer als beschrieben (F-07). |
-| 2.5 UI: Sollwert ≤ 190, Ausgang %, Fehlergrund, Autotune-Bestätigung | ✅ | |
-| 2.5 README/Schaltplan synchron | ✅ | [docs/schaltplan.svg](docs/schaltplan.svg) trägt 190/200/750/215. |
-| 3 Hardwaremaßnahmen | ⏳ nicht prüfbar | Unabhängige Abschaltung, Erdung, SSR etc. |
-| 5 Prüfstufe 1 (Unit-/HAL-Test) | ❌ | Es gibt kein `test/`-Verzeichnis. |
-| 5 Stufen 2–6 | ❌ offen | Keine Protokolle mit Heizlast. |
+| 2.5 UI: Sollwert ≤ 190, Ausgang %, Fehlergrund, Autotune-Bestätigung                                                             | ✅                    |                                                                                                                         |
+| 2.5 README/Schaltplan synchron                                                                                                   | ✅                    | [docs/schaltplan.svg](docs/schaltplan.svg) trägt 190/200/750/215.                                                       |
+| 3 Hardwaremaßnahmen                                                                                                              | ⏳ nicht prüfbar      | Unabhängige Abschaltung, Erdung, SSR etc.                                                                               |
+| 5 Prüfstufe 1 (Unit-/HAL-Test)                                                                                                   | ❌                    | Es gibt kein `test/`-Verzeichnis.                                                                                       |
+| 5 Stufen 2–6                                                                                                                     | ❌ offen              | Keine Protokolle mit Heizlast.                                                                                          |
 
 ### 3.3 `README.md` – Aussagen, die vom Code abweichen oder nicht tragen
 
-| README-Aussage | Befund |
-|---|---|
-| „Sollwert 20–80 °C“ für Autotune | Der Sollwert **hat auf den Autotune keinen Einfluss** (Bibliothek nutzt die Starttemperatur als Sollwert, F-01). |
-| „Start-Timeout (‚Kein Startwert‘) und ‚Messwert veraltet‘ werden getrennt angezeigt“ | Beide Zustände sind im aktuellen Design **praktisch nicht erreichbar** (F-06). |
-| „Verlaufsdiagramm (2 h, 5-s-Raster)“ | Heap-/Laufzeitproblem von `/history` (F-04). |
-| „Ausgangsleistung/PWM“ im Diagramm | PWM-Verlauf wird mit 0 Nachkommastellen ausgegeben (F-12). |
-| „Der aktuelle Sensorzustand … ohne die Fehlerverriegelung aufzuheben“ | ✅ stimmt. |
-| „Der Bericht … `localStorage` … Seite geöffnet lassen“ | ✅ ehrlich, aber fragil (F-15). |
-| „Heizung ist nach Boot und Fehler quittiert ausgeschaltet“ | ✅ für Boot/Quittierung. Nach Reset zusätzlich ohne Fehlergedächtnis (F-08). |
-| Alle übrigen Funktionsbeschreibungen (Encoder, OLED-Retry, STALL, CSV-Spalten, Endpunkte, Grenzen) | ✅ stimmen mit dem Code überein. |
+| README-Aussage                                                                                     | Befund                                                                                                           |
+| -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| „Sollwert 20–80 °C“ für Autotune                                                                   | Der Sollwert **hat auf den Autotune keinen Einfluss** (Bibliothek nutzt die Starttemperatur als Sollwert, F-01). |
+| „Start-Timeout (‚Kein Startwert‘) und ‚Messwert veraltet‘ werden getrennt angezeigt“               | Beide Zustände sind im aktuellen Design **praktisch nicht erreichbar** (F-06).                                   |
+| „Verlaufsdiagramm (2 h, 5-s-Raster)“                                                               | Heap-/Laufzeitproblem von `/history` (F-04).                                                                     |
+| „Ausgangsleistung/PWM“ im Diagramm                                                                 | PWM-Verlauf wird mit 0 Nachkommastellen ausgegeben (F-12).                                                       |
+| „Der aktuelle Sensorzustand … ohne die Fehlerverriegelung aufzuheben“                              | ✅ stimmt.                                                                                                        |
+| „Der Bericht … `localStorage` … Seite geöffnet lassen“                                             | ✅ ehrlich, aber fragil (F-15).                                                                                   |
+| „Heizung ist nach Boot und Fehler quittiert ausgeschaltet“                                         | ✅ für Boot/Quittierung. Nach Reset zusätzlich ohne Fehlergedächtnis (F-08).                                      |
+| Alle übrigen Funktionsbeschreibungen (Encoder, OLED-Retry, STALL, CSV-Spalten, Endpunkte, Grenzen) | ✅ stimmen mit dem Code überein.                                                                                  |
 
 ---
 
@@ -292,12 +292,12 @@ sind es nicht. Reiner Integrator-Erhalt (Simulation B) erzeugt dafür +11 K Übe
 Bei jedem `write()`, der über den freien Platz hinausgeht, ruft die Bibliothek `resizeAdd(needed)` auf; `cbuf::resize` **alloziert neu, kopiert alles und nullt den Puffer**
 (ESP8266-Core `cbuf.cpp`). Wegen des exakten Wachstums geschieht das bei praktisch jedem weiteren Schreibvorgang → **O(n²)**.
 
-| Historie | JSON | Realloc-Zyklen | kopierte Bytes | Dauer bei 30 / 60 MB/s |
-|---|---|---|---|---|
-| 30 min (360 Pkt.) | 10,6 KiB | 3 842 | 46 MB | 1,5 / 0,8 s |
-| 60 min (720 Pkt.) | 21,2 KiB | 8 162 | 187 MB | 6,2 / 3,1 s |
-| 90 min (1 080 Pkt.) | 31,7 KiB | 12 482 | 420 MB | 14 / 7 s |
-| 120 min (1 440 Pkt.) | 42,3 KiB | 16 802 | 747 MB | 25 / 12 s |
+| Historie             | JSON     | Realloc-Zyklen | kopierte Bytes | Dauer bei 30 / 60 MB/s |
+| -------------------- | -------- | -------------- | -------------- | ---------------------- |
+| 30 min (360 Pkt.)    | 10,6 KiB | 3 842          | 46 MB          | 1,5 / 0,8 s            |
+| 60 min (720 Pkt.)    | 21,2 KiB | 8 162          | 187 MB         | 6,2 / 3,1 s            |
+| 90 min (1 080 Pkt.)  | 31,7 KiB | 12 482         | 420 MB         | 14 / 7 s               |
+| 120 min (1 440 Pkt.) | 42,3 KiB | 16 802         | 747 MB         | 25 / 12 s              |
 
 (Berechnung des tatsächlichen Schreibmusters; Durchsatz ist eine Annahme.) Zusätzlich braucht der letzte Realloc **Alt- und Neupuffer gleichzeitig**
 (≈ 2 × 42 KiB). Bei 45 KB statischem RAM bleiben dem Heap grob 35 KB, nach WLAN-Stack deutlich weniger. **Wahrscheinlich** schlägt die Allokation nach etwa
@@ -377,13 +377,13 @@ eigener Taste/Drehung verlassen, ohne `localButtonPressed()`.
 Zum Punkt „Thermal Runaway“ aus `bedenken.md`: Simulation (Zwei-Massen-Modell, 250-ms-Abtastung, **100 % Leistung bis Software-Abschaltung bei 215 °C Messwert**):
 
 | C_Element / C_Sohle / Kopplung / τ_Sensor | Abschaltzeit | Spitze Sohle | Spitze Heizelement |
-|---|---|---|---|
-| 80 J/K / 300 J/K / 25 W/K / 1 s | 42 s | **230,5 °C** | 285 °C |
-| 80 / 300 / 25 / 3 s | 44 s | 240 °C | 295 °C |
-| 150 / 300 / 10 / 1 s | 57 s | 251 °C | 357 °C |
-| 150 / 500 / 10 / 3 s | 80 s | 249 °C | 380 °C |
-| 60 / 200 / 40 / 0,5 s | 28 s | 226 °C | 259 °C |
-| 200 / 300 / 8 / 5 s | 71 s | 273 °C | 388 °C |
+| ----------------------------------------- | ------------ | ------------ | ------------------ |
+| 80 J/K / 300 J/K / 25 W/K / 1 s           | 42 s         | **230,5 °C** | 285 °C             |
+| 80 / 300 / 25 / 3 s                       | 44 s         | 240 °C       | 295 °C             |
+| 150 / 300 / 10 / 1 s                      | 57 s         | 251 °C       | 357 °C             |
+| 150 / 500 / 10 / 3 s                      | 80 s         | 249 °C       | 380 °C             |
+| 60 / 200 / 40 / 0,5 s                     | 28 s         | 226 °C       | 259 °C             |
+| 200 / 300 / 8 / 5 s                       | 71 s         | 273 °C       | 388 °C             |
 
 Unter diesen **Annahmen** würde die 230-°C-Sicherung beim Szenario „Volllast bis Abschaltung“ (Regelfehler, stuck-on-Ausgang bis Software greift, F-05) in der Mehrzahl der Fälle
 auslösen – die in `bedenken.md` genannten 15 K sind „das absolute Minimum“, aber nicht bestätigt. Im Regelbetrieb (Ausgang ≪ 100 %) ist die Lage besser; sie ist **nicht
@@ -526,16 +526,16 @@ Verlust UA = 0,6 W/K + Strahlung, Sensorverzögerung 1 s, Umgebung 22 °C, 2 000
 
 ### 5.1 Regelgüte, 90 min
 
-| Variante | Sollwert | Max. Sohle | Überschw. | t bis Sollwert −2 K | Hub letzte 20 min | Ø Duty |
-|---|---|---|---|---|---|---|
-| **A: aktueller Code** (Ts 100 ms, Integrator-Reset) | 100 °C | 100,1 | +0,1 K | 282 s | **8,9 K** | 2,7 % |
-| B: Ts 250 ms, Integrator bleibt | 100 °C | 105,5 | +5,5 K | 290 s | 1,0 K | 2,9 % |
-| E: Ts 250 ms, Integralband 40 K, Ki 0,005 | 100 °C | 100,8 | +0,8 K | 473 s | 1,0 K | 2,9 % |
-| **A: aktueller Code** | 190 °C | 190,2 | +0,2 K | 352 s | **19,5 K** (170,1…189,6) | 6,2 % |
-| B | 190 °C | 201,0 | +11,0 K | 310 s | 0,7 K | 6,5 % |
-| **E (Ts 250, Band 40 K, Ki 0,005)** | 190 °C | 190,5 | **+0,5 K** | 1 117 s (≈ 19 min) | **0,7 K** | 6,4 % |
-| E (Band 40 K, Ki 0,02) | 190 °C | 196,4 | +6,4 K | 472 s | 0,7 K | 6,6 % |
-| P-only-Probe (Band 10–25 K) | 190 °C | 163,5 | −26,5 K | – | – | 5,4 % |
+| Variante                                            | Sollwert | Max. Sohle | Überschw.  | t bis Sollwert −2 K | Hub letzte 20 min        | Ø Duty |
+| --------------------------------------------------- | -------- | ---------- | ---------- | ------------------- | ------------------------ | ------ |
+| **A: aktueller Code** (Ts 100 ms, Integrator-Reset) | 100 °C   | 100,1      | +0,1 K     | 282 s               | **8,9 K**                | 2,7 %  |
+| B: Ts 250 ms, Integrator bleibt                     | 100 °C   | 105,5      | +5,5 K     | 290 s               | 1,0 K                    | 2,9 %  |
+| E: Ts 250 ms, Integralband 40 K, Ki 0,005           | 100 °C   | 100,8      | +0,8 K     | 473 s               | 1,0 K                    | 2,9 %  |
+| **A: aktueller Code**                               | 190 °C   | 190,2      | +0,2 K     | 352 s               | **19,5 K** (170,1…189,6) | 6,2 %  |
+| B                                                   | 190 °C   | 201,0      | +11,0 K    | 310 s               | 0,7 K                    | 6,5 %  |
+| **E (Ts 250, Band 40 K, Ki 0,005)**                 | 190 °C   | 190,5      | **+0,5 K** | 1 117 s (≈ 19 min)  | **0,7 K**                | 6,4 %  |
+| E (Band 40 K, Ki 0,02)                              | 190 °C   | 196,4      | +6,4 K     | 472 s               | 0,7 K                    | 6,6 %  |
+| P-only-Probe (Band 10–25 K)                         | 190 °C   | 163,5      | −26,5 K    | –                   | –                        | 5,4 %  |
 
 Letzte Zeile: Kp = 1,8 erzeugt bei 190 °C einen **P-Offset von ≈ 27–30 K** – ein zu schmales Integralband erreicht den Sollwert nie.
 Ableitung für die Praxis: Integralband ≥ P-Offset, oder Feedforward (F-02).
@@ -564,21 +564,21 @@ Regel- und Sicherheitslogik künftig ohne Hardware regressionsgetestet werden �
 
 ## 6. Wartbarkeit
 
-| Aspekt | Befund | Bewertung |
-|---|---|---|
-| **Struktur** | Sinnvolle Aufteilung (`controller`, `ui`, `web_interface`, `config`), Namespaces statt Klassen. | 🟢 gut für die Größe |
-| **Kopplung/Testbarkeit** | Alles in anonymen Namespace-Globals; direkter Zugriff auf `millis()`, `digitalWrite`, `Serial`, `MAX6675`. Keine Abstraktion, kein Mock möglich. | 🔴 Haupthindernis für Tests |
-| **Zustandsmodell** | Implizit über Flags (`heaterEnabled`, `tuning`, `latchedFault`, `sensorValid`…). Gültige Kombinationen nicht erzwungen. | 🟡 expliziter `enum class State` empfohlen |
-| **`update()`** | ~100 Zeilen mit Sensor, Stall, Fehler, Autotune, Regelung, PWM, Historie, Log in einer Funktion. | 🟡 in Phasen-Funktionen teilen |
-| **Magic Numbers** | `0x3C`, `250`, `30` ms, `5`, `1.5/0.05/0.15/10`, `190` im JS, … | 🟡 zentralisieren |
-| **Konstantenstil** | Pins als `#define`, Rest `constexpr`. | ⚪ einheitlich `constexpr uint8_t` |
-| **Strings als Protokoll** | Deutscher Statustext steuert JS-Logik (`startsWith`, `innerText === …`). | 🟡 Codes/Enums + Übersetzung im UI |
-| **Webseite** | 476 Zeilen HTML/CSS/JS als C++-Rohstring in `web_page.h`; Inline-Handler; Logo zweimal (Favicon + Inline-SVG); Zustand im DOM-Text. | 🟡 LittleFS + `data/index.html`, `app.js`, `style.css` (gzip), Build-Skript |
-| **Fehlerbehandlung** | `begin()`-Funktionen ohne Rückgabewert; OLED-Retry vorbildlich. | 🟢/🟡 |
-| **Kommentare/Doku** | Sparsam und sachlich; README sehr ausführlich, aber monolithisch. | 🟢 |
-| **Reproduzierbarkeit** | Libs/Plattform ungepinnt (F-22), kein Git, kein CI. | 🔴 |
-| **Sicherheitsarchitektur** | Gute Prinzipien (Default-LOW, Latch). Aber Sicherheitslogik ist mit Regelung, UI-Strings und Autotune im selben File vermischt. | 🟡 *Safety Supervisor* trennen |
-| **Portabilität** | Direkte ESP8266-Annahmen (kooperatives Scheduling, `A0`, GPIO16). | 🟡 HAL-Schicht |
+| Aspekt                     | Befund                                                                                                                                           | Bewertung                                                                  |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| **Struktur**               | Sinnvolle Aufteilung (`controller`, `ui`, `web_interface`, `config`), Namespaces statt Klassen.                                                  | 🟢 gut für die Größe                                                        |
+| **Kopplung/Testbarkeit**   | Alles in anonymen Namespace-Globals; direkter Zugriff auf `millis()`, `digitalWrite`, `Serial`, `MAX6675`. Keine Abstraktion, kein Mock möglich. | 🔴 Haupthindernis für Tests                                                 |
+| **Zustandsmodell**         | Implizit über Flags (`heaterEnabled`, `tuning`, `latchedFault`, `sensorValid`…). Gültige Kombinationen nicht erzwungen.                          | 🟡 expliziter `enum class State` empfohlen                                  |
+| **`update()`**             | ~100 Zeilen mit Sensor, Stall, Fehler, Autotune, Regelung, PWM, Historie, Log in einer Funktion.                                                 | 🟡 in Phasen-Funktionen teilen                                              |
+| **Magic Numbers**          | `0x3C`, `250`, `30` ms, `5`, `1.5/0.05/0.15/10`, `190` im JS, …                                                                                  | 🟡 zentralisieren                                                           |
+| **Konstantenstil**         | Pins als `#define`, Rest `constexpr`.                                                                                                            | ⚪ einheitlich `constexpr uint8_t`                                          |
+| **Strings als Protokoll**  | Deutscher Statustext steuert JS-Logik (`startsWith`, `innerText === …`).                                                                         | 🟡 Codes/Enums + Übersetzung im UI                                          |
+| **Webseite**               | 476 Zeilen HTML/CSS/JS als C++-Rohstring in `web_page.h`; Inline-Handler; Logo zweimal (Favicon + Inline-SVG); Zustand im DOM-Text.              | 🟡 LittleFS + `data/index.html`, `app.js`, `style.css` (gzip), Build-Skript |
+| **Fehlerbehandlung**       | `begin()`-Funktionen ohne Rückgabewert; OLED-Retry vorbildlich.                                                                                  | 🟢/🟡                                                                        |
+| **Kommentare/Doku**        | Sparsam und sachlich; README sehr ausführlich, aber monolithisch.                                                                                | 🟢                                                                          |
+| **Reproduzierbarkeit**     | Libs/Plattform ungepinnt (F-22), kein Git, kein CI.                                                                                              | 🔴                                                                          |
+| **Sicherheitsarchitektur** | Gute Prinzipien (Default-LOW, Latch). Aber Sicherheitslogik ist mit Regelung, UI-Strings und Autotune im selben File vermischt.                  | 🟡 *Safety Supervisor* trennen                                              |
+| **Portabilität**           | Direkte ESP8266-Annahmen (kooperatives Scheduling, `A0`, GPIO16).                                                                                | 🟡 HAL-Schicht                                                              |
 
 **Positiv:** `millis()`-Überlauf wird überall korrekt über Differenzen behandelt; keine `delay()`-Blockaden im Regelpfad; Eingaben werden vor Verwendung geprüft (`strtod` mit `end`-Test,
 `isfinite`, Bereichsprüfung); `PROGMEM` für HTML; moderne ArduinoJson-7-API; `.gitignore` + `secrets.example.h`.
@@ -605,27 +605,27 @@ Die Sicherheitsregel „**SSR-Pin wird nur über `IHeaterOutput::set()` geschalt
 
 ## 7. „State of the Art“-Abgleich
 
-| Thema | Ist | Stand der Technik | Priorität |
-|---|---|---|---|
-| Reglerabtastung | `PID_v1` Default 100 ms, Mismatch | Abtastung = Messtakt, Compute nur bei neuem Wert | P0 |
-| Anti-Windup | Integrator-Reset durch Mode-Wechsel | Conditional Integration / Back-Calculation / Clamping | P0 |
-| D-Anteil | Auf Rohwert (0,25 K Quantisierung) | Gefilterter D (Tiefpass), D auf Messwert ✅(PID_v1 tut das) | P0 |
-| Autotune | Relay-Lib mit Starttemperatur als Sollwert | Relay mit Hysterese um Testsollwert oder Sprungantwort; konservative Regeln (Tyreus-Luyben/No-Overshoot) | P1 |
-| Sensor | MAX6675 (12 Bit, wenig Diagnose) | MAX31855/MAX31856 mit Fehlerregister, 50/60-Hz-Filter, ggf. zweiter Sensor | P0/P1 |
-| Plausibilität | NaN/Bereich | + Rohwort-Bits, Steigungsgrenze, „Heizen ohne Anstieg“, Redundanz | P0 |
-| Überwachung | Software-Timeout, Soft-WDT | **Hardware-Watchdog/Dead-Man** + unabhängige Temperaturabschaltung | P0 |
-| Fehler-Gedächtnis | RAM | Persistent (RTC/Flash), Reset-Grund-Anzeige | P1 |
-| Leistungsstellung | 1-s-Fenster, ms-Pulse | Burst-Fire über Halbwellen, ggf. Nulldurchgangserkennung | P2 |
-| Web-API | Query-Parameter-POST, kein Schutz | JSON-Body, Header-/Origin-Schutz, optional Auth, versionierte Pfade (`/api/v1`) | P1 |
-| Echtzeitdaten | Polling 1 s (+ 10 s Historie) | **SSE/WebSocket** (in ESPAsyncWebServer vorhanden), Delta-Historie | P2 |
-| Statischer Webinhalt | C++-Rohstring, CDN | LittleFS, gzip, lokal gebündelt, SRI/Versionierung | P1 |
-| Konfiguration | Compile-Zeit, WLAN in Header | WiFiManager/Captive Portal, mDNS, LittleFS/Preferences | P2 |
-| Updates | Kabel | OTA (authentifiziert, nur im Fehlerfrei-/Heizung-aus-Zustand) | P2 |
-| Tests/CI | keine | PlatformIO Unity (`native`), GitHub Actions (`pio run`, `pio test`, `pio check`), clang-format/-tidy | P1 |
-| Build | ungepinnt | Gepinnte Plattform/Libs, `-Wall -Wextra`, `static_assert` für Sicherheitskonstanten | P1 |
-| Versionierung | keine | Git, SemVer, Build-ID in Boot-Log/`/data` | P1 |
-| Beobachtbarkeit | Serial-CSV | + Heap/RSSI/Reset-Grund/Uptime, `/metrics` (Prometheus) oder MQTT | P2 |
-| Doku | Fließtext | Zustandsdiagramm (Mermaid), FMEA, Anforderungs-Trace-Matrix | P1 |
+| Thema                | Ist                                        | Stand der Technik                                                                                        | Priorität |
+| -------------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------- | --------- |
+| Reglerabtastung      | `PID_v1` Default 100 ms, Mismatch          | Abtastung = Messtakt, Compute nur bei neuem Wert                                                         | P0        |
+| Anti-Windup          | Integrator-Reset durch Mode-Wechsel        | Conditional Integration / Back-Calculation / Clamping                                                    | P0        |
+| D-Anteil             | Auf Rohwert (0,25 K Quantisierung)         | Gefilterter D (Tiefpass), D auf Messwert ✅(PID_v1 tut das)                                               | P0        |
+| Autotune             | Relay-Lib mit Starttemperatur als Sollwert | Relay mit Hysterese um Testsollwert oder Sprungantwort; konservative Regeln (Tyreus-Luyben/No-Overshoot) | P1        |
+| Sensor               | MAX6675 (12 Bit, wenig Diagnose)           | MAX31855/MAX31856 mit Fehlerregister, 50/60-Hz-Filter, ggf. zweiter Sensor                               | P0/P1     |
+| Plausibilität        | NaN/Bereich                                | + Rohwort-Bits, Steigungsgrenze, „Heizen ohne Anstieg“, Redundanz                                        | P0        |
+| Überwachung          | Software-Timeout, Soft-WDT                 | **Hardware-Watchdog/Dead-Man** + unabhängige Temperaturabschaltung                                       | P0        |
+| Fehler-Gedächtnis    | RAM                                        | Persistent (RTC/Flash), Reset-Grund-Anzeige                                                              | P1        |
+| Leistungsstellung    | 1-s-Fenster, ms-Pulse                      | Burst-Fire über Halbwellen, ggf. Nulldurchgangserkennung                                                 | P2        |
+| Web-API              | Query-Parameter-POST, kein Schutz          | JSON-Body, Header-/Origin-Schutz, optional Auth, versionierte Pfade (`/api/v1`)                          | P1        |
+| Echtzeitdaten        | Polling 1 s (+ 10 s Historie)              | **SSE/WebSocket** (in ESPAsyncWebServer vorhanden), Delta-Historie                                       | P2        |
+| Statischer Webinhalt | C++-Rohstring, CDN                         | LittleFS, gzip, lokal gebündelt, SRI/Versionierung                                                       | P1        |
+| Konfiguration        | Compile-Zeit, WLAN in Header               | WiFiManager/Captive Portal, mDNS, LittleFS/Preferences                                                   | P2        |
+| Updates              | Kabel                                      | OTA (authentifiziert, nur im Fehlerfrei-/Heizung-aus-Zustand)                                            | P2        |
+| Tests/CI             | keine                                      | PlatformIO Unity (`native`), GitHub Actions (`pio run`, `pio test`, `pio check`), clang-format/-tidy     | P1        |
+| Build                | ungepinnt                                  | Gepinnte Plattform/Libs, `-Wall -Wextra`, `static_assert` für Sicherheitskonstanten                      | P1        |
+| Versionierung        | keine                                      | Git, SemVer, Build-ID in Boot-Log/`/data`                                                                | P1        |
+| Beobachtbarkeit      | Serial-CSV                                 | + Heap/RSSI/Reset-Grund/Uptime, `/metrics` (Prometheus) oder MQTT                                        | P2        |
+| Doku                 | Fließtext                                  | Zustandsdiagramm (Mermaid), FMEA, Anforderungs-Trace-Matrix                                              | P1        |
 
 ---
 
@@ -633,17 +633,17 @@ Die Sicherheitsregel „**SSR-Pin wird nur über `IHeaterOutput::set()` geschalt
 
 Wie gut kann das Projekt **heute** erweitert werden?
 
-| Erweiterung | Aufwand heute | Hindernis |
-|---|---|---|
-| Weitere Betriebsart (z. B. Temperaturprofil/Reflow) | hoch | Kein Zustandsmodell, `update()` monolithisch, kein Rampenkonzept |
-| Zweiter Sensor / Redundanz | mittel | Sensor direkt im Controller instanziiert, keine Schnittstelle |
-| Anderer Sensor (MAX31855/31856, PT100) | mittel | Gleiche Ursache |
-| Anderer Aktor (Phasenanschnitt, Burst) | mittel | PWM-Logik in `update()` verwoben |
-| MQTT/Home-Assistant | mittel | Nur HTTP-Pull-API, Zustand nur über Einzelgetter |
-| Parameter speichern/übernehmen | mittel | Kein Persistenzlayer, Regler-Parameter `Kp/Ki/Kd` global & statisch |
-| Mehrere Clients/Sessions | mittel | Kein Berechtigungsmodell |
-| ESP32-Portierung | mittel–hoch | Kooperatives Scheduling vorausgesetzt (F-25) |
-| Unit-Tests | hoch | Keine HAL-Abstraktion (F-24, Abschnitt 6) |
+| Erweiterung                                         | Aufwand heute | Hindernis                                                           |
+| --------------------------------------------------- | ------------- | ------------------------------------------------------------------- |
+| Weitere Betriebsart (z. B. Temperaturprofil/Reflow) | hoch          | Kein Zustandsmodell, `update()` monolithisch, kein Rampenkonzept    |
+| Zweiter Sensor / Redundanz                          | mittel        | Sensor direkt im Controller instanziiert, keine Schnittstelle       |
+| Anderer Sensor (MAX31855/31856, PT100)              | mittel        | Gleiche Ursache                                                     |
+| Anderer Aktor (Phasenanschnitt, Burst)              | mittel        | PWM-Logik in `update()` verwoben                                    |
+| MQTT/Home-Assistant                                 | mittel        | Nur HTTP-Pull-API, Zustand nur über Einzelgetter                    |
+| Parameter speichern/übernehmen                      | mittel        | Kein Persistenzlayer, Regler-Parameter `Kp/Ki/Kd` global & statisch |
+| Mehrere Clients/Sessions                            | mittel        | Kein Berechtigungsmodell                                            |
+| ESP32-Portierung                                    | mittel–hoch   | Kooperatives Scheduling vorausgesetzt (F-25)                        |
+| Unit-Tests                                          | hoch          | Keine HAL-Abstraktion (F-24, Abschnitt 6)                           |
 
 Eine **HAL-Schicht + ein explizites Zustandsmodell** wären die Investition mit dem größten Hebel: Sie machen Tests, Redundanz, neue Sensoren und die ESP32-Portierung gleichzeitig möglich.
 
@@ -763,15 +763,15 @@ bool isTrustedRequest(AsyncWebServerRequest *r) {
 
 Empfohlene zusätzliche Kriterien/Prüfschritte:
 
-| Stufe | Ergänzung |
-|---|---|
-| 1 (Unit/HAL) | Tests für: Rohwort-Validierung, Steigungsgrenze, „Heizen ohne Anstieg“, Latch + Reset-Persistenz, Stall-Handling, Grenzprüfungen (alle Eingabepfade), `static_assert`s, Autotune-Abbruchpfade, PWM-Quantisierung. Ziel: 100 % Zweigabdeckung der Sicherheitslogik. |
-| 2 (Kaltstart) | **Fehlerinjektion** je Leitung (SO/SCK/CS/VCC/GND), Messung „Zeit bis SSR LOW“ mit Logikanalysator; Watchdog-/Dead-Man-Test (Loop absichtlich blockieren → SSR muss binnen Soll fallen); Reset während Fehler → Fehlergedächtnis. |
-| 3 (niedrig heizen) | σ des Sensors **bei laufendem SSR**; Vergleich mit Referenz; Stallhäufigkeit mit offener Webseite über ≥ 2 h (Heap-/Stall-Telemetrie). |
-| 4 (PWM) | Auswertung mit Skript (Hub/Welligkeit pro Duty 5/10/20 %), Vergleich 1000/500/200 ms und Burst-Fire. |
-| 5 (Regelversuche) | **Nachheiz-Messung** (Sohle *und* Element/Referenz) beim Abschalten aus 100/150/190 °C – belegt oder widerlegt die 15-K-Reserve (F-10). |
-| 6 (Autotune) | Erst nach Neuimplementierung (F-01); Akzeptanz: Schwingungen nachweisbar, Ku/Tu plausibel, Vorschlag im Regelversuch ohne Überschwingen über Grenzwert. |
-| Zusätzlich | Langlaufversuch ≥ 4 h mit Heap-/Reset-Protokoll; CSRF-Test (fremde Seite → POST) nach Umsetzung von F-07. |
+| Stufe              | Ergänzung                                                                                                                                                                                                                                                          |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1 (Unit/HAL)       | Tests für: Rohwort-Validierung, Steigungsgrenze, „Heizen ohne Anstieg“, Latch + Reset-Persistenz, Stall-Handling, Grenzprüfungen (alle Eingabepfade), `static_assert`s, Autotune-Abbruchpfade, PWM-Quantisierung. Ziel: 100 % Zweigabdeckung der Sicherheitslogik. |
+| 2 (Kaltstart)      | **Fehlerinjektion** je Leitung (SO/SCK/CS/VCC/GND), Messung „Zeit bis SSR LOW“ mit Logikanalysator; Watchdog-/Dead-Man-Test (Loop absichtlich blockieren → SSR muss binnen Soll fallen); Reset während Fehler → Fehlergedächtnis.                                  |
+| 3 (niedrig heizen) | σ des Sensors **bei laufendem SSR**; Vergleich mit Referenz; Stallhäufigkeit mit offener Webseite über ≥ 2 h (Heap-/Stall-Telemetrie).                                                                                                                             |
+| 4 (PWM)            | Auswertung mit Skript (Hub/Welligkeit pro Duty 5/10/20 %), Vergleich 1000/500/200 ms und Burst-Fire.                                                                                                                                                               |
+| 5 (Regelversuche)  | **Nachheiz-Messung** (Sohle *und* Element/Referenz) beim Abschalten aus 100/150/190 °C – belegt oder widerlegt die 15-K-Reserve (F-10).                                                                                                                            |
+| 6 (Autotune)       | Erst nach Neuimplementierung (F-01); Akzeptanz: Schwingungen nachweisbar, Ku/Tu plausibel, Vorschlag im Regelversuch ohne Überschwingen über Grenzwert.                                                                                                            |
+| Zusätzlich         | Langlaufversuch ≥ 4 h mit Heap-/Reset-Protokoll; CSRF-Test (fremde Seite → POST) nach Umsetzung von F-07.                                                                                                                                                          |
 
 ---
 
@@ -797,6 +797,15 @@ Empfohlene zusätzliche Kriterien/Prüfschritte:
 4. Soll das Gerät für **Reflow** (Profile) oder dauerhaftes Halten genutzt werden? Das entscheidet über Regelkonzept (Rampen, Vorsteuerung).
 5. Sollen Weitergabe/Veröffentlichung geplant sein (Lizenz, Haftungshinweis, Normbezug)?
 6. Darf ein Plattformwechsel (ESP32) erwogen werden?
+
+## 14.1 Antworten des Betreibers
+
+1. Sensor ist nahe am Heizelement eingeschraubt, ein Zweitthermometer ist nicht vorhanden.
+2. In der Zuleitung zum Heizelement befindet sich eine Schmelzsicherung 15A und 240 Grad Celsius.
+3. Nein, ausschließlich eine Person bedient das Gerät über einen Browser, daher ist volle Bedienung über Browser vorgesehen.
+4. Erstmal nur  Temperatur halten, Reflow-Profile sind vorerst nicht relevant.
+5. Weitergabe oder Veröffentlichung ist derzeit nicht geplant.
+6. Ein Plattformwechsel auf ESP32 ist derzeit nicht vorgesehen.
 
 ---
 
