@@ -60,6 +60,9 @@ constexpr double THERMAL_RESPONSE_MIN_OUTPUT_PERCENT = 15.0;
 constexpr double THERMAL_RESPONSE_MIN_ERROR_C = 5.0;
 constexpr double THERMAL_RESPONSE_MIN_RISE_C = 0.5;
 constexpr double PID_INTEGRAL_BAND_C = 40.0;
+// Aufheiz-Boost: ab diesem Abstand zum Sollwert mindestens diese Leistung
+constexpr double BOOST_MIN_ERROR_C = 25.0;
+constexpr double BOOST_OUTPUT_PERCENT = 50.0;
 constexpr unsigned long PID_D_FILTER_TAU_MS = 1000;
 // Ist der Abstand zwischen zwei update()-Aufrufen so gross, wurde der Loop blockiert
 // (z. B. WLAN). Das ist kein Sensorfehler: SSR aus und sofort neu messen.

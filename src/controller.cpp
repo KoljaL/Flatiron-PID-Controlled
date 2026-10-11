@@ -501,6 +501,10 @@ namespace Controller
             error > 0.0 && error <= PID_INTEGRAL_BAND_C ? Ki : 0.0;
         pid.SetTunings(Kp, effectiveKi, Kd);
         pid.Compute();
+        // Aufheiz-Boost: weit unter dem Sollwert mindestens BOOST_OUTPUT_PERCENT,
+        // darunter uebernimmt der PID allein.
+        if (error > BOOST_MIN_ERROR_C)
+          out = max(out, WINDOW_SIZE * BOOST_OUTPUT_PERCENT / 100.0);
       }
       if (input >= sp)
         out = 0.0;
