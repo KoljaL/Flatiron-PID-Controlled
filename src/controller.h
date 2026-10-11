@@ -6,9 +6,8 @@ namespace Controller
   enum class FaultReason
   {
     None,
-    SensorStartupTimeout,
-    SensorStaleTimeout,
     SensorValue,
+    SensorPlausibility,
     OverTemperature
   };
 
@@ -42,8 +41,11 @@ namespace Controller
 
   // Historie (älteste zuerst), i in 0..historyCount()-1
   int historyCount();
+  int historyStartIndex();
   float historyAt(int i);
+  float historyAt(int i, int startIndex);
   float historySetpointAt(int i);
+  float historySetpointAt(int i, int startIndex);
   float historyOutputAt(int i); // 0..1
-  void historyTuningsAt(int i, float &kp, float &ki, float &kd);
+  float historyOutputAt(int i, int startIndex);
 }

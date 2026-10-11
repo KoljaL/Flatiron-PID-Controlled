@@ -305,10 +305,7 @@ static const char index_html[] PROGMEM = R"rawliteral(
                 data: { datasets: [
                     ds('Temperatur (°C)', '#e06c75', { yAxisID: 'y' }),
                     ds('Soll-Temperatur (°C)', '#61afef', { yAxisID: 'y' }),
-                    ds('SSR PWM (0–1)', '#98c379', { yAxisID: 'y2', stepped: true }),
-                    ds('Kp', '#e5c07b', { yAxisID: 'y2', stepped: true, hidden: true }),
-                    ds('Ki', '#c678dd', { yAxisID: 'y2', stepped: true, hidden: true }),
-                    ds('Kd', '#56b6c2', { yAxisID: 'y2', stepped: true, hidden: true })
+                    ds('SSR PWM (0–1)', '#98c379', { yAxisID: 'y2', stepped: true })
                 ] },
                 options: {
                     responsive: true,
@@ -327,7 +324,7 @@ static const char index_html[] PROGMEM = R"rawliteral(
                             }
                         },
                         y: { position: 'left', title: { display: true, text: 'Temperatur (°C)' } },
-                        y2: { position: 'right', beginAtZero: true, title: { display: true, text: 'PWM / PID-Parameter' }, grid: { drawOnChartArea: false } }
+                        y2: { position: 'right', beginAtZero: true, max: 1, title: { display: true, text: 'SSR PWM (0–1)' }, grid: { drawOnChartArea: false } }
                     }
                 }
             });
@@ -378,18 +375,27 @@ static const char index_html[] PROGMEM = R"rawliteral(
             });
         }
         function updateGraph() {
-            fetch('/history').then(r => r.json()).then(h => {
+            if (document.hidden) return;
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 5000);
+            fetch('/history', { signal: controller.signal }).then(r => {
+                if (!r.ok) throw new Error('Verlauf konnte nicht geladen werden (HTTP ' + r.status + ')');
+                return r.json();
+            }).then(h => {
                 const n = h.temp.length;
                 if (!n) return;
                 const dt = h.interval * 1000, now = Date.now();
                 const xs = h.temp.map((_, i) => now - (n - 1 - i) * dt);
-                ['temp', 'setpoint', 'pwm', 'kp', 'ki', 'kd'].forEach((k, j) => {
+                ['temp', 'setpoint', 'pwm'].forEach((k, j) => {
                     chart.data.datasets[j].data = h[k].map((y, i) => ({ x: xs[i], y }));
                 });
                 chart.options.scales.x.min = xs[0];
                 chart.options.scales.x.max = now;
                 chart.update();
-            });
+            }).catch(error => {
+                document.getElementById('heater-state').innerText =
+                    error.name === 'AbortError' ? 'Verlauf-Timeout' : 'Verlauf: ' + error.message;
+            }).finally(() => clearTimeout(timeout));
         }
         async function cancelAutotune() {
             logTune('Abbruch angefordert');
@@ -424,7 +430,8 @@ static const char index_html[] PROGMEM = R"rawliteral(
             const confirmed = confirm(
                 'Autotune nur mit kalter Platte (max. 40 °C), befestigtem Thermoelement, ' +
                 'unabhängiger Temperaturmessung und anwesender Person an der Netztrennung starten. ' +
-                'Der Versuch wird bei 120 °C oder nach 10 Minuten abgebrochen. Fortfahren?'
+                'Der Relay-Test schaltet zwischen 0 und 15 % mit ±1,5 °C Hysterese, benötigt sechs Zyklen ' +
+                'und bricht bei 120 °C oder nach 10 Minuten ab. Fortfahren?'
             );
             if (!confirmed) return;
             const button = document.getElementById('tune-button');

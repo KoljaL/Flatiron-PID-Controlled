@@ -7,10 +7,137 @@
 #include <ArduinoJson.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
+#include <memory>
 
 namespace
 {
   AsyncWebServer server(80);
+
+  class HistoryStreamState
+  {
+  public:
+    HistoryStreamState(int count, int startIndex)
+        : count(count), startIndex(startIndex) {}
+
+    size_t write(uint8_t *buffer, size_t capacity)
+    {
+      size_t written = 0;
+      while (written < capacity)
+      {
+        if (tokenOffset == tokenLength && !nextToken())
+          break;
+        const size_t remaining = tokenLength - tokenOffset;
+        const size_t copied = min(remaining, capacity - written);
+        memcpy(buffer + written, token + tokenOffset, copied);
+        tokenOffset += copied;
+        written += copied;
+      }
+      return written;
+    }
+
+  private:
+    enum class Phase
+    {
+      Header,
+      Temperatures,
+      SetpointHeader,
+      Setpoints,
+      PwmHeader,
+      PwmValues,
+      End,
+      Done
+    };
+
+    int count;
+    int startIndex;
+    int item = 0;
+    Phase phase = Phase::Header;
+    char token[32] = {};
+    size_t tokenLength = 0;
+    size_t tokenOffset = 0;
+
+    bool setToken(const char *value)
+    {
+      const size_t length = strlen(value);
+      if (length >= sizeof(token))
+        return false;
+      memcpy(token, value, length + 1);
+      tokenLength = length;
+      tokenOffset = 0;
+      return true;
+    }
+
+    bool nextToken()
+    {
+      while (true)
+      {
+        switch (phase)
+        {
+        case Phase::Header:
+          phase = Phase::Temperatures;
+          snprintf(token, sizeof(token), "{\"interval\":%lu,\"temp\":[",
+                   HISTORY_INTERVAL / 1000);
+          tokenLength = strlen(token);
+          tokenOffset = 0;
+          return true;
+        case Phase::Temperatures:
+          if (item < count)
+          {
+            const float value = Controller::historyAt(item, startIndex);
+            const bool first = item++ == 0;
+            if (!isfinite(value))
+              return setToken(first ? "null" : ",null");
+            char number[24];
+            snprintf(number, sizeof(number), "%.1f", value);
+            snprintf(token, sizeof(token), "%s%s", first ? "" : ",", number);
+            tokenLength = strlen(token);
+            tokenOffset = 0;
+            return true;
+          }
+          phase = Phase::SetpointHeader;
+          break;
+        case Phase::SetpointHeader:
+          phase = Phase::Setpoints;
+          item = 0;
+          return setToken("],\"setpoint\":[");
+        case Phase::Setpoints:
+          if (item < count)
+          {
+            const float value = Controller::historySetpointAt(item, startIndex);
+            const bool first = item++ == 0;
+            snprintf(token, sizeof(token), "%s%.1f", first ? "" : ",", value);
+            tokenLength = strlen(token);
+            tokenOffset = 0;
+            return true;
+          }
+          phase = Phase::PwmHeader;
+          break;
+        case Phase::PwmHeader:
+          phase = Phase::PwmValues;
+          item = 0;
+          return setToken("],\"pwm\":[");
+        case Phase::PwmValues:
+          if (item < count)
+          {
+            const float value = Controller::historyOutputAt(item, startIndex);
+            const bool first = item++ == 0;
+            snprintf(token, sizeof(token), "%s%.2f", first ? "" : ",", value);
+            tokenLength = strlen(token);
+            tokenOffset = 0;
+            return true;
+          }
+          phase = Phase::End;
+          break;
+        case Phase::End:
+          phase = Phase::Done;
+          return setToken("]}");
+        case Phase::Done:
+          return false;
+        }
+      }
+    }
+  };
 
 }
 
@@ -40,11 +167,9 @@ namespace WebInterface
       doc["sensorState"] = Controller::sensorStatusText();
       doc["tuningSuggestion"] = Controller::hasTuningSuggestion();
       JsonObject tuningConfig = doc["tuningConfig"].to<JsonObject>();
-      tuningConfig["noiseBandC"] = 1.5;
-      tuningConfig["outputStepMs"] = WINDOW_SIZE * 0.05;
-      tuningConfig["outputMinPercent"] = 5;
-      tuningConfig["outputMaxPercent"] = 15;
-      tuningConfig["lookbackSeconds"] = 10;
+      tuningConfig["relayOutputPercent"] = AUTOTUNE_RELAY_OUTPUT_PERCENT;
+      tuningConfig["hysteresisC"] = AUTOTUNE_HYSTERESIS_C;
+      tuningConfig["requiredCycles"] = AUTOTUNE_REQUIRED_CYCLES;
       tuningConfig["timeoutMs"] = AUTOTUNE_TIMEOUT;
       tuningConfig["abortTemperatureC"] = AUTOTUNE_MAX_TEMP;
       tuningConfig["maxStartTemperatureC"] = AUTOTUNE_MAX_START_TEMP;
@@ -65,40 +190,16 @@ namespace WebInterface
       serializeJson(doc, response);
       request->send(200, "application/json", response); });
 
-    // Gestreamt, um den knappen Heap nicht mit einem großen JSON zu belasten
     server.on("/history", HTTP_GET, [](AsyncWebServerRequest *request)
               {
-      AsyncResponseStream *res = request->beginResponseStream("application/json");
-      int n = Controller::historyCount();
-      res->printf("{\"interval\":%lu,\"temp\":[", HISTORY_INTERVAL / 1000);
-      for (int i = 0; i < n; i++) {
-        if (i) res->print(",");
-        float value = Controller::historyAt(i);
-        if (isfinite(value)) res->print(value, 1);
-        else res->print("null");
-      }
-      res->print("],\"setpoint\":[");
-      for (int i = 0; i < n; i++) {
-        if (i) res->print(",");
-        res->print(Controller::historySetpointAt(i), 1);
-      }
-      res->print("],\"pwm\":[");
-      for (int i = 0; i < n; i++) {
-        if (i) res->print(",");
-        res->print(Controller::historyOutputAt(i), 0);
-      }
-      const char *names[3] = {"kp", "ki", "kd"};
-      for (int p = 0; p < 3; p++) {
-        res->printf("],\"%s\":[", names[p]);
-        for (int i = 0; i < n; i++) {
-          float v[3];
-          Controller::historyTuningsAt(i, v[0], v[1], v[2]);
-          if (i) res->print(",");
-          res->print(v[p], 2);
-        }
-      }
-      res->print("]}");
-      request->send(res); });
+      const int count = Controller::historyCount();
+      const std::shared_ptr<HistoryStreamState> stream =
+          std::make_shared<HistoryStreamState>(count, Controller::historyStartIndex());
+      request->send(request->beginChunkedResponse(
+          "application/json",
+          [stream](uint8_t *buffer, size_t maxLen, size_t) -> size_t {
+            return stream->write(buffer, maxLen);
+          })); });
 
     server.on("/start-tune", HTTP_POST, [](AsyncWebServerRequest *request)
               {

@@ -45,12 +45,22 @@ constexpr double AUTOTUNE_MAX_START_TEMP = 40.0;
 constexpr double AUTOTUNE_SETPOINT_MIN = 20.0;
 constexpr double AUTOTUNE_SETPOINT_MAX = 80.0;
 constexpr unsigned long AUTOTUNE_TIMEOUT = 10UL * 60UL * 1000UL;
+constexpr double AUTOTUNE_RELAY_OUTPUT_PERCENT = 15.0;
+constexpr double AUTOTUNE_HYSTERESIS_C = 1.5;
+constexpr uint8_t AUTOTUNE_REQUIRED_CYCLES = 6;
 constexpr double AUTOTUNE_KP_MAX = 20.0;
 constexpr double AUTOTUNE_KI_MAX = 1.0;
 constexpr double AUTOTUNE_KD_MAX = 500.0;
 constexpr double FAULT_RESET_MAX_TEMP = 60.0;
-constexpr unsigned long SENSOR_TIMEOUT = 750;
+constexpr unsigned long SENSOR_TIMEOUT = 750; // Frischegrenze, kein erreichbarer Latch-Timeout bei synchroner Messung
 constexpr unsigned long SENSOR_INTERVAL = 250; // MAX6675 braucht ~220 ms
+constexpr double SENSOR_MAX_RISE_RATE_C_PER_S = 20.0;
+constexpr unsigned long THERMAL_RESPONSE_TIMEOUT = 30UL * 1000UL;
+constexpr double THERMAL_RESPONSE_MIN_OUTPUT_PERCENT = 15.0;
+constexpr double THERMAL_RESPONSE_MIN_ERROR_C = 5.0;
+constexpr double THERMAL_RESPONSE_MIN_RISE_C = 0.5;
+constexpr double PID_INTEGRAL_BAND_C = 40.0;
+constexpr unsigned long PID_D_FILTER_TAU_MS = 1000;
 // Ist der Abstand zwischen zwei update()-Aufrufen so gross, wurde der Loop blockiert
 // (z. B. WLAN). Das ist kein Sensorfehler: SSR aus und sofort neu messen.
 constexpr unsigned long LOOP_STALL_THRESHOLD = 400;

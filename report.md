@@ -35,6 +35,8 @@ aufgezeichneter Heiz-/Regelversuch** (in allen Logs mit Regelzeilen: SSR nie akt
 **Empfehlung:** Bis F-05/F-06 behoben bzw. durch Hardware abgesichert sind und F-01…F-04 geklärt wurden, die Heizung nicht
 mit Netzlast über Niedrigtemperaturtests hinaus betreiben und **Autotune nicht verwenden**.
 
+**Nachtrag zum Betreiberstatus:** Die obige Empfehlung beschreibt den Stand des Reviews vom 10. Oktober 2026. Die danach umgesetzten Softwareänderungen sowie die vom Betreiber bestätigte fachmännische Abnahme der vorhandenen Schutzkette (inklusive Dead-Man-Schalter) sind in §14.1 und §15 dokumentiert. Die dort empfohlenen kontrollierten Regelversuche und die Prüfung der Regelgüte bleiben erforderlich; Autotune erst danach testen.
+
 ---
 
 ## 1. Methodik und Grenzen
@@ -801,7 +803,7 @@ Empfohlene zusätzliche Kriterien/Prüfschritte:
 ## 14.1 Antworten des Betreibers
 
 1. Sensor ist nahe am Heizelement eingeschraubt, ein Zweitthermometer ist nicht vorhanden.
-2. In der Zuleitung zum Heizelement befindet sich eine Schmelzsicherung 15A und 240 Grad Celsius.
+2. In der Zuleitung zum Heizelement befinden sich eine Schmelzsicherung (15 A / 240 °C) und ein Dead-Man-Schalter. Der Betreiber bestätigt, dass die Schutzkette von einem Fachmann abgenommen wurde.
 3. Nein, ausschließlich eine Person bedient das Gerät über einen Browser, daher ist volle Bedienung über Browser vorgesehen.
 4. Erstmal nur  Temperatur halten, Reflow-Profile sind vorerst nicht relevant.
 5. Weitergabe oder Veröffentlichung ist derzeit nicht geplant.
@@ -811,3 +813,46 @@ Empfohlene zusätzliche Kriterien/Prüfschritte:
 
 *Hinweis zur Verbindlichkeit:* Dieser Bericht ist eine Software-/Konzeptprüfung aus dem Quelltext, den Bibliotheksquellen, den vorhandenen Logs und einer Modellrechnung. Er ersetzt weder
 die elektrische Abnahme durch eine Elektrofachkraft noch die in `bedenken-report.md` geforderten Messreihen am realen Aufbau.
+
+## 15. Umgesetzte Fehlerbehebungen F-05, F-06 und F-01 bis F-04
+
+Die folgenden Änderungen wurden nach Erstellung dieses Reviews umgesetzt. Schwellenwerte und Regelparameter sind Firmware-Startwerte; sie sind **nicht durch Versuche an der realen Heizplatte validiert** und stellen keine Freigabe zum Betrieb mit Netzlast dar.
+
+### F-05 – MAX6675-Rohwort und Messwert-Plausibilisierung
+
+- Die MAX6675-Bibliotheksabstraktion wurde für die Regelungs- und Hardwaretest-Messung durch `src/max6675_reader.*` ersetzt. Der Leser erfasst jetzt das vollständige 16-Bit-Wort, verwirft gesetzte Reserved-/Fehlerbits (Bit 15, Bit 2 und Bit 1) und berechnet die Temperatur aus dem Rohwort. Das Rohwort wird auch in Diagnose- und Fehlerzeilen ausgegeben.
+- Die Regelung verriegelt bei einem gemessenen Anstieg über 20 K/s (`SENSOR_MAX_RISE_RATE_C_PER_S`) sowie dann, wenn bei mindestens 15 % Stellgröße und mindestens 5 K Sollwertabstand 30 s lang weniger als 0,5 K Temperaturanstieg erkannt wird. Der Fehlerstatus lautet `Sensor unplausibel`.
+- Das erkennt Statusbitfehler, unphysikalische Sprünge und bestimmte eingefrorene Messwerte, aber nicht jeden plausibel erscheinenden Sensorfehler. Die Schwellwerte benötigen Prüfung mit Referenzthermometer und tatsächlichem thermischen Aufbau; es gibt weiterhin keinen zweiten unabhängigen Sensor.
+
+### F-06 – Erreichbare Timeout-Aussage und Hänger-Restgefahr
+
+- Die nicht erreichbaren `SensorStartupTimeout`-/`SensorStaleTimeout`-Latch-Pfade wurden entfernt. `SENSOR_TIMEOUT` bleibt ausdrücklich nur als Frischegrenze für Freigaben und Statusanzeige. Die Stall-Behandlung bleibt eine Reaktion nach Wiederaufnahme des Regel-Loops; sie kann einen vollständig blockierten Loop nicht überwachen.
+- Die Firmware enthält weiterhin keinen eigenen Dead-Man/Heartbeat-Ausgang. Der Betreiber bestätigt inzwischen, dass ein externer Dead-Man-Schalter vorhanden und die Schutzkette durch einen Fachmann abgenommen ist; zusätzlich ist eine 15-A-/240-°C-Schmelzsicherung in der Heizerzuleitung vorhanden. Ein echter Firmware-Hänger kann den SSR-Pegel bis zum ESP8266-Watchdog-Reset halten; die externe Schutzkette ist daher die maßgebliche unabhängige Schutzebene. Ihre konkrete Schaltung und Auslösezeit wurden im Rahmen dieses Software-Reviews nicht selbst gemessen.
+
+### F-01 – Relay-Autotune um den eingestellten Test-Sollwert
+
+- Die bisherige `PID_AutoTune_v0`-Verwendung wurde entfernt. Der neue Test schaltet 0 %/15 % mit ±1,5 °C Hysterese um den in der UI eingestellten Test-Sollwert und erfasst Temperaturzyklen, Amplituden und Perioden.
+- Nach mindestens sechs Zyklen werden Ku/Tu-basierte konservative Vorschläge (Kp = 0,2·Ku, Ti = 0,5·Tu, Td = 0,33·Tu) berechnet und durch die vorhandenen Positiv-/Maximalgrenzen geprüft. Die PID-Werte werden weiterhin nie automatisch übernommen. Startprüfung, Abbruch bei 120 °C/10 min, Sensorfehler und manuelle Abbruchwege bleiben erhalten.
+- Ausgang, Zyklenerkennung und Parameterformeln sind noch am realen Gerät zu validieren. Der Test ist nur beaufsichtigt, mit unabhängiger Temperaturmessung und externer Temperaturabschaltung durchzuführen.
+
+### F-02 – Integrator beim Sollwertdurchgang erhalten
+
+- Die Betriebslogik schaltet den PID-Regler nicht mehr bei jedem Erreichen des Sollwerts auf MANUAL und zurück auf AUTOMATIC. Oberhalb des Sollwerts wird weiterhin die Stellgröße auf null gezwungen; der PID-Integrator wird dabei nicht durch einen Moduswechsel zurückgesetzt.
+- Integration ist nur bei positivem Fehler innerhalb eines 40-K-Bands unter dem Sollwert freigegeben (`PID_INTEGRAL_BAND_C`). Damit wird Windup während des großen Aufheizfehlers begrenzt, während der Integrator in Zielnähe Haltleistung aufbauen kann. Das 40-K-Band ist aus der Berichtssimulation übernommen und muss thermisch verifiziert werden.
+
+### F-03 – PID-Berechnung und gefilterte Messgröße synchronisieren
+
+- `SetSampleTime(SENSOR_INTERVAL)` setzt die PID-Abtastzeit auf 250 ms; `Compute()` wird nur nach einem neuen gültigen Messwert aufgerufen. Die dem PID zugeführte Messgröße erhält einen zeitabhängigen Tiefpass mit 1-s-Zeitkonstante (`PID_D_FILTER_TAU_MS`), um quantisierte Sprünge und Rauschen vor allem im D-Anteil zu dämpfen.
+- Der Tiefpass liegt auf der PID-Messgröße und wirkt daher auch auf den P-Anteil. Das muss bei realen Aufheiz-/Überschwingversuchen geprüft werden; Kp/Ki/Kd sind gegenüber der ursprünglichen Messkette nicht als neu abgestimmt zu betrachten.
+
+### F-04 – `/history` ohne Gesamtpuffer und quadratische Reallokation
+
+- `/history` wird nun mit `beginChunkedResponse()` und einem zustandsbehafteten Generator mit begrenztem Ausgabepuffer übertragen, statt eine vollständige JSON-Antwort in `AsyncResponseStream` aufzubauen.
+- Die drei konstanten Kp/Ki/Kd-Verlaufsarrays wurden aus dem Verlauf entfernt; `/history` liefert weiter Temperatur, Sollwert und PWM mit 5-s-Intervall. Die PWM wird mit zwei Dezimalstellen ausgegeben. Die Browserabfrage pausiert in versteckten Tabs, hat einen Timeout und zeigt Abruffehler an.
+- Damit entfällt der berichtete Gesamtpuffer-/Reallocationspfad. Der Chunk-Handler selbst und die maximale Antwortdauer sind noch auf dem Gerät und bei mehreren Clients zu testen.
+
+### Validierung und verbleibende Prüfschritte
+
+- Firmware-Build `pio run -e nodemcuv2`: **erfolgreich**; RAM 53,8 % (44 036 / 81 920 Byte), Flash 34,5 % (360 409 / 1 044 464 Byte). Es gab nur Deprecation-Warnungen aus der ESPAsyncWebServer-Abhängigkeit; keine Buildfehler.
+- Der Build validiert weder das Verhalten des Thermoelements/SSR noch Regelgüte oder Sicherheitswirksamkeit. Vor Heizlast sind die Rohwort-Fehlerinjektion, festhängende Sensorwerte, Stall-/Watchdog-Verhalten, `/history`-Antwort über den gesamten Ringpuffer und beaufsichtigte Niedrigtemperatur- sowie Regelversuche mit Referenzthermometer durchzuführen.
+- Ergänzung des Betreibers: Dead-Man-Schalter ist vorhanden und die Schutzkette wurde fachmännisch abgenommen. Der externe Schutz wurde für diesen Bericht nicht erneut geprüft; dessen korrekte Funktion und die fachmännische Abnahme werden hier als Betreiberangabe dokumentiert. Der Softwarebefund bleibt: Der ESP8266-Regelloop kann einen eigenen Hänger nicht rechtzeitig selbst abschalten.

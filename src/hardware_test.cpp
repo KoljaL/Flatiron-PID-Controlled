@@ -1,8 +1,8 @@
 #include "hardware_test.h"
 #include "config.h"
+#include "max6675_reader.h"
 #include <Wire.h>
 #include <U8g2lib.h>
-#include <max6675.h>
 
 namespace
 {
@@ -10,11 +10,6 @@ namespace
   constexpr double SSR_ABORT_TEMP = 60.0;       // SSR-Test wird darueber gesperrt
 
   U8G2_SSD1306_128X32_UNIVISION_F_HW_I2C display(U8G2_R0, U8X8_PIN_NONE);
-  MAX6675 &thermocouple()
-  {
-    static MAX6675 instance(MAX_SCK, MAX_CS, MAX_SO);
-    return instance;
-  }
 
   void ssrSet(bool on)
   {
@@ -43,8 +38,8 @@ namespace HardwareTest
   {
     Serial.println();
     Serial.println("=== HARDWARETEST ===");
-    Serial.println("MAX6675,millis,status,temp_c");
-    thermocouple();
+    Serial.println("MAX6675,millis,status,raw_word,temp_c");
+    Max6675Reader::begin();
 
     pinMode(SSR_PIN, OUTPUT);
     ssrSet(false);
@@ -142,10 +137,11 @@ namespace HardwareTest
       if (now - lastSample >= SENSOR_INTERVAL)
       {
         lastSample = now;
-        temp = thermocouple().readCelsius();
-        tempOk = isfinite(temp) && temp >= 0.0 && temp <= 1024.0;
-        Serial.printf("MAX6675,%lu,%s,%.2f\n", now,
-                      tempOk ? "OK" : "UNGUELTIG", temp);
+        const Max6675Reader::Reading reading = Max6675Reader::read();
+        temp = reading.celsius;
+        tempOk = reading.valid && isfinite(temp) && temp >= 0.0 && temp <= 1024.0;
+        Serial.printf("MAX6675,%lu,%s,0x%04X,%.2f\n", now,
+                      tempOk ? "OK" : "UNGUELTIG", reading.raw, temp);
       }
 
       // Anzeige + Seriell einmal pro Sekunde (Display 4x/s)
